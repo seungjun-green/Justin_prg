@@ -1,0 +1,6 @@
+ai_key = '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'
+consumer_key = 'fHjlPri82HkoNOjIrYLJpbXB1'
+consumer_secret = '4dxyxz2UhuODgSgNefmu7BOLZka2Vc6ShjHrdoqNaqcniREB7K'
+oa_key = '1499630375756509184-RrH7TXWbh5KDLdQjjCZkDHcA4sm48c'
+oa_secret  ='jWfJ0ymehA7cChiz0ieVlDG0iYwAFd2SxSqOE9NCded8z'
+news_key='569869d589e24c9484621b4adecc323d'
