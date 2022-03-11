@@ -151,4 +151,29 @@ def reply_or_like():
 
 print("Is this visible??")
 
+'''
+After you woke up, all the thing you need to do is checking whetehr program works well in a intended way
+
+A. Creating contents
+1. sending tweet at exact time
+2. openAi create reasonable responses for - dev talk, joke, news
+3. schedule for those 3 should be good
+4. When reponse is longer than 280 characters,bot should tweet it suing replying to the tweet feature
+
+
+B. replying to people's tweey
+1. Should check new reply for every 15 seconds
+2. It should reply to recent replies(currently no maximum for every 15 seconds: 0 ~ 9999)
+3. It should not reply to the already replied tweet(this could happen if ur runninig program again immideatly after shutting down)
+
+C. FUTRE PLAN
+
+From web get:
+1. Get the openAI settings, tweet times, and Tags
+2. number of maximum replies an hour(pseudo code not even started yet)
+
+JSON files recording:
+1. tweetd - type, text, time
+2. replied - tweet, time
+'''
 
