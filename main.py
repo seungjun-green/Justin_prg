@@ -112,7 +112,7 @@ def reply_or_like():
     while True:
         replies = []
         if firstTime:
-            rd = api.mentions_timeline(count=3)
+            rd = api.mentions_timeline(count=1)
             print(f"first Time: {len(rd)}")
             for dot in rd:
                 replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
@@ -172,6 +172,10 @@ C. FUTRE PLAN
 From web get:
 1. Get the openAI settings, tweet times, and Tags
 2. number of maximum replies an hour(pseudo code not even started yet)
+
+Maintance:
+Should get following things from web:
+tags, open ai settings, maximum replies per hour
 
 JSON files recording:
 1. tweetd - type, text, time
