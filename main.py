@@ -95,12 +95,13 @@ def construct_reply(text):
 
     response = openai.Completion.create(
         engine="text-davinci-001",
-        prompt=processed_text,
+        prompt=f'You:{processed_text}',
         temperature=0.5,
         max_tokens=60,
         top_p=1,
         frequency_penalty=0.5,
-        presence_penalty=0
+        presence_penalty=0,
+        stop=["You:"]
     )
 
     return response['choices'][0]['text']
@@ -137,47 +138,17 @@ def reply_or_like():
 
         time.sleep(15)
 
+#
+# if __name__ == "__main__":
+#     processes = []
+#     p1 = multiprocessing.Process(target=creating_contents)
+#     p1.start()
+#     processes.append(p1)
+#
+#     p2=multiprocessing.Process(target=reply_or_like)
+#     p2.start()
+#     processes.append(p2)
+#
+#     for process in processes:
+#         process.join()
 
-if __name__ == "__main__":
-    processes = []
-    p1 = multiprocessing.Process(target=creating_contents)
-    p1.start()
-    processes.append(p1)
-
-    p2=multiprocessing.Process(target=reply_or_like)
-    p2.start()
-    processes.append(p2)
-
-    for process in processes:
-        process.join()
-
-
-'''
-After you woke up, all the thing you need to do is checking whetehr program works well in a intended way
-
-A. Creating contents
-1. sending tweet at exact time
-2. openAi create reasonable responses for - dev talk, joke, news
-3. schedule for those 3 should be good
-4. When tweet is longer than 280 characters,bot should tweet it using replying to the tweet feature
-
-
-B. replying to people's tweet
-1. Should check new reply for every 15 seconds
-2. It should reply to recent replies(currently no maximum for every 15 seconds: 0 ~ 9999)
-3. It should not reply to the already replied tweet(this could happen if ur runninig program again immideatly after shutting down)
-
-C. FUTRE PLAN
-
-From web get:
-1. Get the openAI settings, tweet times, and Tags
-2. number of maximum replies an hour(pseudo code not even started yet)
-
-Maintance:
-Should get following things from web:
-tags, open ai settings, maximum replies per hour
-
-JSON files recording:
-1. tweetd - type, text, time
-2. replied - tweet, time
-'''
