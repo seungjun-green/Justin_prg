@@ -21,3 +21,4 @@ joke_times = {
 news_times = {
     (21,0)
 }
+
