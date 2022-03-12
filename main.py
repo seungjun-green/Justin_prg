@@ -16,8 +16,8 @@ last_replied = 0
 
 def get_type():
     now = datetime.now().time().replace(second=0, microsecond=0)
-    currH, currM, currS = now.hour, now.minute, now.second
-    curr = (currH, currM, currS)
+    currH, currM = now.hour, now.minute
+    curr = (currH, currM)
     if curr in data.dev_times:
         return 'dev'
     elif curr in data.joke_times:
@@ -63,10 +63,13 @@ def tweet(type):
                 for index in range(0, len(result), 270):
                     split_strings.append(result[index: index + 270])
 
-                for str in split_strings:
-                    result = api.user_timeline(user_id='justin_prg', count=1)
-                    recent_id = result[0]._json['id']
-                    api.update_status(status=str, in_reply_to_status_id=recent_id)
+                for i, str in enumerate(split_strings):
+                    if i == 0:
+                        api.update_status(str)
+                    else:
+                        result = api.user_timeline(user_id='justin_prg', count=1)
+                        recent_id = result[0]._json['id']
+                        api.update_status(status=str, in_reply_to_status_id=recent_id)
 
             # if result is shorter than 280 characters
             else:
@@ -84,7 +87,7 @@ def creating_contents():
             tweet(tweet_type)
         else:
             pass
-        time.sleep(1)
+        time.sleep(60)
 
 def construct_reply(text):
     rd = text.split()[1:]
@@ -135,21 +138,19 @@ def reply_or_like():
         time.sleep(15)
 
 
-# if __name__ == "__main__":
-#     processes = []
-#     p1 = multiprocessing.Process(target=creating_contents)
-#     p1.start()
-#     processes.append(p1)
-#
-#     p2=multiprocessing.Process(target=reply_or_like)
-#     p2.start()
-#     processes.append(p2)
-#
-#     for process in processes:
-#         process.join()
-#
+if __name__ == "__main__":
+    processes = []
+    p1 = multiprocessing.Process(target=creating_contents)
+    p1.start()
+    processes.append(p1)
 
-print("Is this visible??")
+    p2=multiprocessing.Process(target=reply_or_like)
+    p2.start()
+    processes.append(p2)
+
+    for process in processes:
+        process.join()
+
 
 '''
 After you woke up, all the thing you need to do is checking whetehr program works well in a intended way
@@ -158,10 +159,10 @@ A. Creating contents
 1. sending tweet at exact time
 2. openAi create reasonable responses for - dev talk, joke, news
 3. schedule for those 3 should be good
-4. When reponse is longer than 280 characters,bot should tweet it suing replying to the tweet feature
+4. When tweet is longer than 280 characters,bot should tweet it using replying to the tweet feature
 
 
-B. replying to people's tweey
+B. replying to people's tweet
 1. Should check new reply for every 15 seconds
 2. It should reply to recent replies(currently no maximum for every 15 seconds: 0 ~ 9999)
 3. It should not reply to the already replied tweet(this could happen if ur runninig program again immideatly after shutting down)
@@ -176,4 +177,3 @@ JSON files recording:
 1. tweetd - type, text, time
 2. replied - tweet, time
 '''
-

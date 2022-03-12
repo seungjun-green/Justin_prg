@@ -57,10 +57,12 @@ def create_order(type):
             sort_by='relevancy',
             page=1)
 
-        for i in range(2):
+        for i in range(len(recent_news)):
             str=recent_news['articles'][i]['title']
             if str.endswith('CNBC'):
                 str=str[:-7]
+
+            str=f"Feel free to express your emotion on: {str}"
             new_things.append(str)
 
         return new_things, (0,150,1,0,0)
