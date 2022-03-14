@@ -1,0 +1,9 @@
+To launch Justin_Prg to GCP, it have to pass all test in following list:
+
+
+1. tweeting contents at right time
+1.a if tweet is longer than 280 characters, it should tweet it replying to itself.
+
+
+2. replying to mentions
+2.a -

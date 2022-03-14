@@ -5,7 +5,6 @@ from datetime import datetime
 import tweepy as twitter
 import data
 import helper
-import re
 import multiprocessing
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
