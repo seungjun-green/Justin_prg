@@ -147,7 +147,7 @@ def send_reply(order,curr_id, user):
     result = f'@{user}' + ' ' + result
     result = re.sub('\n', '', result)
     result=process_str(result)
-    print(f"{count}, the reply is {result}")
+    print(f"My Reply: {result}")
     try:
         if len(result) > 280:
             split_strings = []
@@ -166,7 +166,7 @@ def send_reply(order,curr_id, user):
         # if result is shorter than 280 characters
         else:
             api.update_status(status=result, in_reply_to_status_id=curr_id)
-            print("reply-tweeted!")
+            print("reply-tweeted! \n")
     except twitter.errors.TweepyException as e:
         print(f"reply-Error Happened {e}\n")
 
