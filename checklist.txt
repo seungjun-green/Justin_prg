@@ -6,4 +6,7 @@ To launch Justin_Prg to GCP, it have to pass all test in following list:
 
 
 2. replying to mentions
-2.a -
+2.a -if reply is longer than 280 characters, it should tweet it replying to itself.
+
+
+3. JSON Files
