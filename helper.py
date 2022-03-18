@@ -6,6 +6,20 @@ import keys
 from datetime import date,timedelta
 import tweepy as twitter
 import re
+from datetime import datetime
+
+def get_type():
+    now = datetime.now().time().replace(second=0, microsecond=0)
+    currH, currM = now.hour, now.minute
+    curr = (currH, currM)
+    if curr in data.dev_times:
+        return 'dev'
+    elif curr in data.joke_times:
+        return 'joke'
+    elif curr in data.news_times:
+        return 'news'
+    else:
+        return None
 
 def dev_order(tag):
     choices = [
