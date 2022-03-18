@@ -138,30 +138,36 @@ def send_tweet(order, a,b,c,d,e):
 def send_reply(order,curr_id, user):
     result = ""
     count = 0
+
     # get the response
-    while True:
-        response = openai.Completion.create(
-            engine="text-davinci-001",
-            prompt=order,
-            temperature=0.5,
-            max_tokens=60,
-            top_p=1,
-            frequency_penalty=0.5,
-            presence_penalty=0,
-            stop=["You:"]
-        )
+    try:
+        while True:
+            response = openai.Completion.create(
+                engine="text-davinci-001",
+                prompt=order,
+                temperature=0.5,
+                max_tokens=60,
+                top_p=1,
+                frequency_penalty=0.5,
+                presence_penalty=0,
+                stop=["You:"]
+            )
 
-        count += 1
-        result += response['choices'][0]['text']
-        order += response['choices'][0]['text']
-        if count == 3 or response['choices'][0]['text'] == '':
-            break
+            count += 1
+            result += response['choices'][0]['text']
+            order += response['choices'][0]['text']
+            if count == 3 or response['choices'][0]['text'] == '':
+                break
 
-    # tweet the result
-    result = f'@{user}' + ' ' + result
-    result = re.sub('\n', '', result)
-    result=process_str(result)
-    print(f"My Reply: {result}")
+        # tweet the result
+        result = f'@{user}' + ' ' + result
+        result = re.sub('\n', '', result)
+        result=process_str(result)
+        print(f"My Reply: {result}")
+    except openai.OpenAIError as e:
+        print(f"OPENAI - Error happend {e}")
+
+    # tweet the reply
     try:
         if len(result) > 280:
             split_strings = []

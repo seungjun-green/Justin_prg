@@ -56,5 +56,3 @@ if __name__ == "__main__":
         process.join()
 
 
-print("oh did it worked??")
-
