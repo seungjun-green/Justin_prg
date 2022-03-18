@@ -1,9 +1,7 @@
 import time
 import keys
 import openai
-from datetime import datetime
 import tweepy as twitter
-import data
 import helper
 import multiprocessing
 
@@ -12,24 +10,10 @@ auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 openai.api_key = keys.ai_key
 
-last_replied = 0
-
-def get_type():
-    now = datetime.now().time().replace(second=0, microsecond=0)
-    currH, currM = now.hour, now.minute
-    curr = (currH, currM)
-    if curr in data.dev_times:
-        return 'dev'
-    elif curr in data.joke_times:
-        return 'joke'
-    elif curr in data.news_times:
-        return 'news'
-    else:
-        return None
 
 def tweet():
     while True:
-        tweet_type = get_type()
+        tweet_type = helper.get_type()
         if tweet_type != None:
             orders, settings = helper.create_order(type)
             a, b, c, d, e = settings
@@ -60,9 +44,9 @@ def reply():
 
 if __name__ == "__main__":
     processes = []
-    # p1 = multiprocessing.Process(target=tweet)
-    # p1.start()
-    # processes.append(p1)
+    p1 = multiprocessing.Process(target=tweet)
+    p1.start()
+    processes.append(p1)
 
     p2=multiprocessing.Process(target=reply)
     p2.start()
@@ -71,4 +55,6 @@ if __name__ == "__main__":
     for process in processes:
         process.join()
 
+
+print("oh did it worked??")
 
