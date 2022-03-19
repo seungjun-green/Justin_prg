@@ -1,19 +1,20 @@
 To launch Justin_Prg to GCP, it have to pass all test in following list:
 
 
-1. tweeting contents at right time
-1.a if tweet is longer than 280 characters, it should tweet it replying to itself.
-
+1. tweeting contents at a right time
+- content created by it should be great
+- if tweet is longer than 280 characters, it should tweet it replying to itself.
+(dev, joke, news, elon)
 
 2. replying to mentions
-2.a -if reply is longer than 280 characters, it should tweet it replying to itself.
+- reply created by it should be great
+- when constructing order, if the tweet contains a image, add a link to it.
+- if reply is longer than 280 characters, it should tweet it replying to itself.
 
-
-3. JSON Files
-
-
-
-
+3. Error log files
+if error happens, add current info to the error file.
+- tweet error: tweet_erros.py
+- openAI error: openai_errors.py
 
 
 Things need to be improved/added
