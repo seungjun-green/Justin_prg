@@ -17,6 +17,17 @@ if error happens, add current info to the error file.
 - openAI error: openai_errors.py
 
 
+
+'''
+work on the func getting recent tweets of elon musk
+
+checking if tweet contains images and getting a link to it
+
+error files
+
+improve checklist, test checklist
+
+'''
 Things need to be improved/added
 
 
