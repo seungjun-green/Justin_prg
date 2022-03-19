@@ -10,7 +10,6 @@ auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 openai.api_key = keys.ai_key
 
-
 def tweet():
     while True:
         tweet_type = helper.get_type()

@@ -81,6 +81,14 @@ def create_order(type):
             new_things.append(str)
 
         return new_things, (0,150,1,0,0)
+    # if type == 'elon':
+    #     recent_tweets = get_recent_tweets('elonmusk')
+    #     orders = []
+    #     for tweet in recent_tweets:
+    #         curr_order = "Friend:{tweet}\nYou:"
+    #         orders.append(curr_order)
+    #
+    #     return orders, (0.5,150,1,0,0)
 
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
@@ -88,29 +96,33 @@ auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 
 
-
 def send_tweet(order, a,b,c,d,e):
     result = ""
     count = 0
-    order += '\n\n'
+    print(f"the order is {order}")
 
     # get the response
-    while True:
-        response = openai.Completion.create(
-            engine="text-davinci-001",
-            prompt=order,
-            temperature=a,
-            max_tokens=b,
-            top_p=c,
-            frequency_penalty=d,
-            presence_penalty=e
-        )
+    try:
+        while True:
+            response = openai.Completion.create(
+                engine="text-davinci-001",
+                prompt=order,
+                temperature=a,
+                max_tokens=b,
+                top_p=c,
+                frequency_penalty=d,
+                presence_penalty=e
+            )
 
-        count += 1
-        result += response['choices'][0]['text']
-        order += response['choices'][0]['text']
-        if count == 3 or response['choices'][0]['text'] == '':
-            break
+            count += 1
+            result += response['choices'][0]['text']
+            order += response['choices'][0]['text']
+            if count == 3 or response['choices'][0]['text'] == '':
+                break
+
+        print(f"new tweet is {result}")
+    except twitter.errors.TweepyException as e:
+        print(f"[send_tweet-openAI Error]: {e}\n")
 
     # tweet the result
     try:
@@ -188,7 +200,7 @@ def send_reply(order,curr_id, user):
             api.update_status(status=result, in_reply_to_status_id=curr_id)
             print("reply-tweeted! \n")
     except twitter.errors.TweepyException as e:
-        print(f"reply-Error Happened {e}\n")
+        print(f"[send_reply-openAI Error]: {e}\n")
 
 def construct_order(tw_id):
     chats = []

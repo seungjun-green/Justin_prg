@@ -10,3 +10,33 @@ To launch Justin_Prg to GCP, it have to pass all test in following list:
 
 
 3. JSON Files
+
+
+
+
+
+
+Things need to be improved/added
+
+
+----- Improvement----
+1. if the tweet contians the image, provicde the text with a link of it
+
+Example:
+
+order be like:
+
+Friend: Do you think this is a scam? www.linkOfthePhoto.com
+You:
+
+2. imrpoving openAI settings, promts, tags
+
+-------------
+
+
+--- new feaure ---
+
+1. every a few hour get the recent tweets of Elon musk, and reply to his tweet
+
+------
+
