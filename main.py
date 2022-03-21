@@ -79,6 +79,9 @@ repo.git.add(update=True)
 repo.index.commit('ffff')
 
 
+origin = repo.remote(name='origin')
+origin.push()
+
 '''
 commit and push the josn files from gcp to git
 upating projct, getting recent codes from git to gcp
