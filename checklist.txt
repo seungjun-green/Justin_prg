@@ -16,18 +16,19 @@ if error happens, add current info to the error file.
 - tweet error: tweet_erros.py
 - openAI error: openai_errors.py
 
-
-
 '''
 TO DO LIST
 
 
 March:
-checking if tweet contains images and getting a link to it
 
-error files
+will current code works perfectly - error handling, updateing json files. => You can find this out later on running the bot in action
 
-test checklist, improve checklist
+git merging, pushing, comitting in python code??? => a little google search will do
+
+checking if tweet contains images and getting a link to it => have to change some code of getting replys
+
+test checklist, improve checklist => with time, it will be good
 
 April:
 

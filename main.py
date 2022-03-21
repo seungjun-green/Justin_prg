@@ -4,6 +4,7 @@ import openai
 import tweepy as twitter
 import helper
 import time
+from git import Repo
 import multiprocessing
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
@@ -38,21 +39,37 @@ def reply():
         time.sleep(15)
 
 
-if __name__ == "__main__":
-    processes = []
-    p1 = multiprocessing.Process(target=tweet)
-    p1.start()
-    processes.append(p1)
+# if __name__ == "__main__":
+#     processes = []
+#     p1 = multiprocessing.Process(target=tweet)
+#     p1.start()
+#     processes.append(p1)
+#
+#     p2=multiprocessing.Process(target=reply)
+#     p2.start()
+#     processes.append(p2)
+#
+#     for process in processes:
+#         process.join()
 
-    p2=multiprocessing.Process(target=reply)
-    p2.start()
-    processes.append(p2)
-
-    for process in processes:
-        process.join()
 
 
 
+
+PATH_OF_GIT_REPO = r'path\to\your\project\folder\.git'  # make sure .git folder is properly configured
+COMMIT_MESSAGE = 'comment from python script'
+
+def git_push():
+    try:
+        repo = Repo(PATH_OF_GIT_REPO)
+        repo.git.add(update=True)
+        repo.index.commit(COMMIT_MESSAGE)
+        origin = repo.remote(name='origin')
+        origin.push()
+    except:
+        print('Some error occured while pushing the code')
+
+git_push()
 
 
 
