@@ -19,13 +19,21 @@ if error happens, add current info to the error file.
 
 
 '''
-work on the func getting recent tweets of elon musk
+TO DO LIST
 
+
+March:
 checking if tweet contains images and getting a link to it
 
 error files
 
-improve checklist, test checklist
+test checklist, improve checklist
+
+April:
+
+work on the func getting recent tweets of elon musk
+
+
 
 '''
 Things need to be improved/added
