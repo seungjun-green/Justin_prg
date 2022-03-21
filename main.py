@@ -59,7 +59,7 @@ def reply():
 print("ffd")
 
 
-PATH_OF_GIT_REPO = "/Users/seungjunlee/PycharmProjects/Justin_prg"
+PATH_OF_GIT_REPO = "."
 COMMIT_MESSAGE = 'updated from GCP'
 
 def git_push():
@@ -77,10 +77,9 @@ def git_push():
 repo = Repo(PATH_OF_GIT_REPO)
 repo.git.add(update=True)
 repo.index.commit('ffff')
-
-
 origin = repo.remote(name='origin')
 origin.push()
+
 
 '''
 commit and push the josn files from gcp to git
