@@ -1,4 +1,7 @@
 import time
+
+import git
+
 import keys
 import openai
 import tweepy as twitter
@@ -53,11 +56,11 @@ def reply():
 #         process.join()
 
 
+print("ffd")
 
 
-
-PATH_OF_GIT_REPO = r'path\to\your\project\folder\.git'  # make sure .git folder is properly configured
-COMMIT_MESSAGE = 'comment from python script'
+PATH_OF_GIT_REPO = "/Users/seungjunlee/PycharmProjects/Justin_prg"
+COMMIT_MESSAGE = 'updated from GCP'
 
 def git_push():
     try:
@@ -66,11 +69,26 @@ def git_push():
         repo.index.commit(COMMIT_MESSAGE)
         origin = repo.remote(name='origin')
         origin.push()
-    except:
-        print('Some error occured while pushing the code')
+    except git.GitError as e:
+        print(f'error: {e}')
 
-git_push()
 
+
+repo = Repo(PATH_OF_GIT_REPO)
+repo.git.add(update=True)
+repo.index.commit('ffff')
+
+
+'''
+commit and push the josn files from gcp to git
+upating projct, getting recent codes from git to gcp
+
+getting the link of the image
+
+improve checklist, create a testing program.
+----
+Add a new feature, which is replying to Elon Musk's tweet
+'''
 
 
 
