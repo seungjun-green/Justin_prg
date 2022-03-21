@@ -7,6 +7,23 @@ from datetime import date,timedelta
 import tweepy as twitter
 import re
 from datetime import datetime
+import json
+import time
+
+
+def update_json(type, txt, error):
+    file_name = f"{type}_errors.json"
+    with open(file_name) as json_file:
+        erros = json.load(json_file)
+        curr_date = date.today().strftime("%d/%m/%Y")
+        curr_time = time.strftime("%H:%M:%S", time.localtime())
+        erros[curr_date+'-'+curr_time] = {"curr": txt, "error": error}
+
+    with open(file_name, 'w') as f:
+        json.dump(erros, f, indent=4)
+
+    print(f"updated {file_name}")
+
 
 def get_type():
     now = datetime.now().time().replace(second=0, microsecond=0)
@@ -121,8 +138,9 @@ def send_tweet(order, a,b,c,d,e):
                 break
 
         print(f"new tweet is {result}")
-    except twitter.errors.TweepyException as e:
-        print(f"[send_tweet-openAI Error]: {e}\n")
+    except openai.error.OpenAIError as e:
+        print(f"[send_tweet] openAI Error: {e}\n")
+        update_json("openai", order, e)
 
     # tweet the result
     try:
@@ -145,7 +163,8 @@ def send_tweet(order, a,b,c,d,e):
             api.update_status(result)
         print('tweet-tweeted!')
     except twitter.errors.TweepyException as e:
-        print(f"Tweet - Error Happened: {e} \n")
+        print(f"[send_tweet] Twitter Error: {e} \n")
+        update_json("tweet",result,e)
 
 def send_reply(order,curr_id, user):
     result = ""
@@ -177,7 +196,8 @@ def send_reply(order,curr_id, user):
         result=process_str(result)
         print(f"My Reply: {result}")
     except openai.OpenAIError as e:
-        print(f"OPENAI - Error happend {e}")
+        print(f"[send_reply] openAI Error: {e}")
+        update_json("openai", order, e)
 
     # tweet the reply
     try:
@@ -200,7 +220,8 @@ def send_reply(order,curr_id, user):
             api.update_status(status=result, in_reply_to_status_id=curr_id)
             print("reply-tweeted! \n")
     except twitter.errors.TweepyException as e:
-        print(f"[send_reply-openAI Error]: {e}\n")
+        print(f"[send_reply] Twitter Error: {e}\n")
+        update_json("tweet", result, e)
 
 def construct_order(tw_id):
     chats = []

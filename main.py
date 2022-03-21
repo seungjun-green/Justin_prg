@@ -3,6 +3,7 @@ import keys
 import openai
 import tweepy as twitter
 import helper
+import time
 import multiprocessing
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
@@ -30,11 +31,7 @@ def reply():
 
         for i, reply in enumerate(replies):
             curr_id,text, user = reply
-            try:
-                helper.send_reply(helper.construct_order(curr_id),curr_id, user)
-            except twitter.errors.TweepyException as e:
-                print(f"reply func- Error {e} \n")
-
+            helper.send_reply(helper.construct_order(curr_id),curr_id, user)
             if i==0:
                 helper.Data.lastReplied_id = curr_id
 
@@ -53,5 +50,10 @@ if __name__ == "__main__":
 
     for process in processes:
         process.join()
+
+
+
+
+
 
 
