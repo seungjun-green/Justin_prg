@@ -305,11 +305,13 @@ def get_elons_tweets():
     elons=[]
     if Data.elon_firstTime:
         rd = api.user_timeline(screen_name="elonmusk", count=1)
+        print(f"elon - first Time: {len(rd)}")
         for dot in rd:
             elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
         Data.firstTime = False
     else:
         rd = api.user_timeline(screen_id="elonmusk", since_id=Data.elon_last_id)
+        print(f"elon - second Time: {len(rd)}")
         for dot in rd:
             elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
 

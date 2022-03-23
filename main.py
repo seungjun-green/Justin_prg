@@ -47,7 +47,7 @@ def elon():
             if i == 0:
                 helper.Data.elon_last_id = curr_id
 
-        time.sleep(150)
+        time.sleep(1500)
 
 
 if __name__ == "__main__":
@@ -66,4 +66,3 @@ if __name__ == "__main__":
 
     for process in processes:
         process.join()
-
