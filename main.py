@@ -76,7 +76,7 @@ def git_push():
 
 repo = Repo(PATH_OF_GIT_REPO)
 repo.git.add(update=True)
-repo.index.commit('ffff')
+repo.index.commit('bigbang theory')
 origin = repo.remote(name='origin')
 origin.push()
 
