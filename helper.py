@@ -281,6 +281,8 @@ def construct_order(tw_id):
 class Data:
     firstTime = True
     lastReplied_id = 0
+    elon_last_id = 0
+    elon_firstTime=True
 
 def get_replies():
     replies = []
@@ -296,7 +298,24 @@ def get_replies():
         for dot in rd:
             replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
 
+
     return replies
+
+def get_elons_tweets():
+    elons=[]
+    if Data.elon_firstTime:
+        rd = api.user_timeline(screen_name="elonmusk", count=1)
+        for dot in rd:
+            elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
+        Data.firstTime = False
+    else:
+        rd = api.user_timeline(screen_id="elonmusk", since_id=Data.elon_last_id)
+        for dot in rd:
+            elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
+
+    return elons
+
+
 
 def process_str(str):
     last = str.find('Friend:')
