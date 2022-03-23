@@ -42,41 +42,18 @@ def reply():
         time.sleep(15)
 
 
-# if __name__ == "__main__":
-#     processes = []
-#     p1 = multiprocessing.Process(target=tweet)
-#     p1.start()
-#     processes.append(p1)
-#
-#     p2=multiprocessing.Process(target=reply)
-#     p2.start()
-#     processes.append(p2)
-#
-#     for process in processes:
-#         process.join()
+if __name__ == "__main__":
+    processes = []
+    p1 = multiprocessing.Process(target=tweet)
+    p1.start()
+    processes.append(p1)
 
+    p2=multiprocessing.Process(target=reply)
+    p2.start()
+    processes.append(p2)
 
-print("ffd")
-
-
-PATH_OF_GIT_REPO = "."
-
-def git_push(changes):
-    try:
-        repo = Repo(".")
-        repo.git.add(update=True)
-        repo.index.commit(changes)
-        origin = repo.remote(name='origin')
-        origin.push()
-    except git.GitError as e:
-        print(f'error: {e}')
-
-
-git_push("updated tweet_erros")
-
-
-
-
+    for process in processes:
+        process.join()
 
 
 
