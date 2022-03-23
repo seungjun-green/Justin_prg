@@ -81,16 +81,5 @@ origin = repo.remote(name='origin')
 origin.push()
 
 
-'''
-commit and push the josn files from gcp to git
-upating projct, getting recent codes from git to gcp
-
-getting the link of the image
-
-improve checklist, create a testing program.
-----
-Add a new feature, which is replying to Elon Musk's tweet
-'''
-
 
 
