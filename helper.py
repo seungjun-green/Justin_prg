@@ -9,18 +9,29 @@ import re
 from datetime import datetime
 import json
 import time
+from git import Repo
+import git
 
+def git_push(changes):
+    try:
+        repo = Repo(".")
+        repo.git.add(update=True)
+        repo.index.commit(changes)
+        origin = repo.remote(name='origin')
+        origin.push()
+    except git.GitError as e:
+        print(f'error: {e}')
 
-def update_json(type, txt, error):
-    file_name = f"{type}_errors.json"
+def update_json(type_, txt, error, func_name):
+    file_name = f"{type_}_errors.json"
     with open(file_name) as json_file:
-        erros = json.load(json_file)
+        errors = json.load(json_file)
         curr_date = date.today().strftime("%d/%m/%Y")
         curr_time = time.strftime("%H:%M:%S", time.localtime())
-        erros[curr_date+'-'+curr_time] = {"curr": txt, "error": error}
+        errors[curr_date+'-'+curr_time] = {"curr": txt, "error": error, "func": func_name}
 
     with open(file_name, 'w') as f:
-        json.dump(erros, f, indent=4)
+        json.dump(errors, f, indent=4)
 
     print(f"updated {file_name}")
 
@@ -140,7 +151,8 @@ def send_tweet(order, a,b,c,d,e):
         print(f"new tweet is {result}")
     except openai.error.OpenAIError as e:
         print(f"[send_tweet] openAI Error: {e}\n")
-        update_json("openai", order, e)
+        update_json("openai", order, e, "send_tweet")
+        git_push("updated openai_errors")
 
     # tweet the result
     try:
@@ -164,7 +176,8 @@ def send_tweet(order, a,b,c,d,e):
         print('tweet-tweeted!')
     except twitter.errors.TweepyException as e:
         print(f"[send_tweet] Twitter Error: {e} \n")
-        update_json("tweet",result,e)
+        update_json("tweet",result,e, "send_tweet")
+        git_push("updated tweet_errors")
 
 def send_reply(order,curr_id, user):
     result = ""
@@ -197,7 +210,8 @@ def send_reply(order,curr_id, user):
         print(f"My Reply: {result}")
     except openai.OpenAIError as e:
         print(f"[send_reply] openAI Error: {e}")
-        update_json("openai", order, e)
+        update_json("openai", order, e, "send_reply")
+        git_push("updated openai_errors")
 
     # tweet the reply
     try:
@@ -221,11 +235,11 @@ def send_reply(order,curr_id, user):
             print("reply-tweeted! \n")
     except twitter.errors.TweepyException as e:
         print(f"[send_reply] Twitter Error: {e}\n")
-        update_json("tweet", result, e)
+        update_json("tweet", result, e, "send_reply")
+        git_push("updated tweet_errors")
 
 def construct_order(tw_id):
     chats = []
-
     rd = api.get_status(id=tw_id)
     while True:
         try:

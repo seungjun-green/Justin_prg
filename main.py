@@ -60,21 +60,20 @@ print("ffd")
 
 
 PATH_OF_GIT_REPO = "."
-COMMIT_MESSAGE = 'updated from GCP'
 
-def git_push():
+def git_push(changes):
     try:
-        repo = Repo(PATH_OF_GIT_REPO)
+        repo = Repo(".")
         repo.git.add(update=True)
-        repo.index.commit('bigbang theory')
+        repo.index.commit(changes)
         origin = repo.remote(name='origin')
         origin.push()
     except git.GitError as e:
         print(f'error: {e}')
 
 
+git_push("updated tweet_erros")
 
-git_push()
 
 
 
