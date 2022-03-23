@@ -66,7 +66,7 @@ def git_push():
     try:
         repo = Repo(PATH_OF_GIT_REPO)
         repo.git.add(update=True)
-        repo.index.commit(COMMIT_MESSAGE)
+        repo.index.commit('bigbang theory')
         origin = repo.remote(name='origin')
         origin.push()
     except git.GitError as e:
@@ -74,11 +74,9 @@ def git_push():
 
 
 
-repo = Repo(PATH_OF_GIT_REPO)
-repo.git.add(update=True)
-repo.index.commit('bigbang theory')
-origin = repo.remote(name='origin')
-origin.push()
+git_push()
+
+
 
 
 
