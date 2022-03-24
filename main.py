@@ -51,6 +51,7 @@ def elon():
 
 
 if __name__ == "__main__":
+    print("Start of the program")
     processes = []
     p1 = multiprocessing.Process(target=tweet)
     p1.start()
