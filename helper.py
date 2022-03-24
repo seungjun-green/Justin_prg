@@ -151,7 +151,7 @@ def send_tweet(order, a,b,c,d,e):
         print(f"new tweet is {result}")
     except openai.error.OpenAIError as e:
         print(f"[send_tweet] openAI Error: {e}\n")
-        update_json("openai", order, e, "send_tweet")
+        update_json("openai", order, str(e), "send_tweet")
         git_push("updated openai_errors")
 
     # tweet the result
@@ -162,13 +162,13 @@ def send_tweet(order, a,b,c,d,e):
             for index in range(0, len(result), 270):
                 split_strings.append(result[index: index + 270])
 
-            for i, str in enumerate(split_strings):
+            for i, sub_str in enumerate(split_strings):
                 if i == 0:
-                    api.update_status(str)
+                    api.update_status(sub_str)
                 else:
                     result = api.user_timeline(user_id='justin_prg', count=1)
                     recent_id = result[0]._json['id']
-                    api.update_status(status=str, in_reply_to_status_id=recent_id)
+                    api.update_status(status=sub_str, in_reply_to_status_id=recent_id)
 
         # if result is shorter than 280 characters
         else:
@@ -176,7 +176,7 @@ def send_tweet(order, a,b,c,d,e):
         print('tweet-tweeted!')
     except twitter.errors.TweepyException as e:
         print(f"[send_tweet] Twitter Error: {e} \n")
-        update_json("tweet",result,e, "send_tweet")
+        update_json("tweet",result, str(e), "send_tweet")
         git_push("updated tweet_errors")
 
 def send_reply(order,curr_id, user):
@@ -210,7 +210,7 @@ def send_reply(order,curr_id, user):
         print(f"My Reply: {result}")
     except openai.OpenAIError as e:
         print(f"[send_reply] openAI Error: {e}")
-        update_json("openai", order, e, "send_reply")
+        update_json("openai", order, str(e), "send_reply")
         git_push("updated openai_errors")
 
     # tweet the reply
@@ -220,14 +220,14 @@ def send_reply(order,curr_id, user):
             for index in range(0, len(result), 270):
                 split_strings.append(result[index: index + 270])
 
-            for i, str in enumerate(split_strings):
+            for i, sub_str in enumerate(split_strings):
                 if i == 0:
-                    api.update_status(status=str, in_reply_to_status_id=curr_id)
+                    api.update_status(status=sub_str, in_reply_to_status_id=curr_id)
 
                 else:
                     result = api.user_timeline(user_id='justin_prg', count=1)
                     recent_id = result[0]._json['id']
-                    api.update_status(status=str, in_reply_to_status_id=recent_id)
+                    api.update_status(status=sub_str, in_reply_to_status_id=recent_id)
 
         # if result is shorter than 280 characters
         else:
@@ -235,7 +235,7 @@ def send_reply(order,curr_id, user):
             print("reply-tweeted! \n")
     except twitter.errors.TweepyException as e:
         print(f"[send_reply] Twitter Error: {e}\n")
-        update_json("tweet", result, e, "send_reply")
+        update_json("tweet", result, str(e), "send_reply")
         git_push("updated tweet_errors")
 
 def construct_order(tw_id):
@@ -288,13 +288,13 @@ def get_replies():
     replies = []
     if Data.firstTime:
         rd = api.mentions_timeline(count=1)
-        print(f"first Time: {len(rd)}")
+        print(f"reply-first Time: {len(rd)}")
         for dot in rd:
             replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
         Data.firstTime = False
     else:
         rd = api.mentions_timeline(since_id=Data.lastReplied_id)
-        print(f"second Time: {len(rd)}")
+        print(f"reply-second Time: {len(rd)}")
         for dot in rd:
             replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
 
@@ -308,9 +308,9 @@ def get_elons_tweets():
         print(f"elon - first Time: {len(rd)}")
         for dot in rd:
             elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
-        Data.firstTime = False
+        Data.elon_firstTime = False
     else:
-        rd = api.user_timeline(screen_id="elonmusk", since_id=Data.elon_last_id)
+        rd = api.user_timeline(screen_name="elonmusk", since_id=Data.elon_last_id)
         print(f"elon - second Time: {len(rd)}")
         for dot in rd:
             elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))

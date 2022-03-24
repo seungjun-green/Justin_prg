@@ -34,6 +34,7 @@ def reply():
             if i==0:
                 helper.Data.lastReplied_id = curr_id
 
+
         time.sleep(15)
 
 
@@ -47,7 +48,7 @@ def elon():
             if i == 0:
                 helper.Data.elon_last_id = curr_id
 
-        time.sleep(1500)
+        time.sleep(15)
 
 
 if __name__ == "__main__":

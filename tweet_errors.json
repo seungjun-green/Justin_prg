@@ -2,5 +2,18 @@
     "testting": {
         "error": "longer",
         "time": "5am"
+    },
+    "24/03/2022-14:09:42": {
+        "curr": "@Justin_prg  It's a screenshot of a tweet. This is a tweet from the official Twitter account for the TV show \"Strang\u2026 https://t.co/xN2Q0VfPxD",
+        "error": "ddd"
+    },
+    "24/03/2022-14:20:51": {
+        "curr": "@Justin_prg   It's a screenshot of a tweet. This is a tweet from the official Twitter account for the TV show \"Strang\u2026 https://t.co/VfNcuX3b4i",
+        "error": "dfs"
+    },
+    "24/03/2022-14:27:47": {
+        "curr": "dddd",
+        "error": "400 Bad Request\n408 - The given URL is invalid.",
+        "func": "tes"
     }
 }
