@@ -15,5 +15,10 @@
         "curr": "dddd",
         "error": "400 Bad Request\n408 - The given URL is invalid.",
         "func": "tes"
+    },
+    "25/03/2022-20:12:22": {
+        "curr": "@lacuspual Hey there! How are you?",
+        "error": "403 Forbidden\n187 - Status is a duplicate.",
+        "func": "send_reply"
     }
 }

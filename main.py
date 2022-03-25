@@ -14,7 +14,7 @@ def tweet():
     while True:
         tweet_type = helper.get_type()
         if tweet_type != None:
-            orders, settings = helper.create_order(type)
+            orders, settings = helper.create_order(tweet_type)
             a, b, c, d, e = settings
 
             for order in orders:
