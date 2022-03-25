@@ -11,16 +11,18 @@ tags = {
 }
 
 dev_times = {
-    (20,12),
-    (11,0)
+    #(11,0) in US Eastern Time
+    (15,0)
 }
 
 joke_times = {
-    (14,0)
+    # (14,0) in US Eastern Time
+    (18,0)
 }
 
 news_times = {
-    (21,0)
+    # (21,0) in US Eastern Time
+    (1,0)
 }
 
 elon_times = {
