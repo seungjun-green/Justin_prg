@@ -69,6 +69,3 @@ def elon():
 #     for process in processes:
 #         process.join()
 
-
-
-rr = api.user_timeline(screen_name="marsyrprogress", count=1)

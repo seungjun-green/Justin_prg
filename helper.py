@@ -104,23 +104,14 @@ def create_order(type):
             sort_by='relevancy',
             page=1)
 
-        for i in range(len(recent_news)):
-            str=recent_news['articles'][i]['title']
-            if str.endswith('CNBC'):
-                str=str[:-7]
+        str=recent_news['articles'][0]['title']
+        if str.endswith('CNBC'):
+            str=str[:-7]
 
-            str=f"Feel free to express your emotion on: {str}"
-            new_things.append(str)
+        str=f"Friend:Feel free to express your emotion on: {str}\nYou:"
+        new_things.append(str)
 
-        return new_things, (0,150,1,0,0)
-    # if type == 'elon':
-    #     recent_tweets = get_recent_tweets('elonmusk')
-    #     orders = []
-    #     for tweet in recent_tweets:
-    #         curr_order = "Friend:{tweet}\nYou:"
-    #         orders.append(curr_order)
-    #
-    #     return orders, (0.5,150,1,0,0)
+        return new_things, (0.5,60,1,0.5,0)
 
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
