@@ -314,8 +314,6 @@ def get_elons_tweets():
 
     return elons
 
-
-
 def process_str(str):
     last = str.find('Friend:')
     if last==-1:

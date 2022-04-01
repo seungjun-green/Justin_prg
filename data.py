@@ -18,12 +18,8 @@ joke_times = {
 }
 
 news_times = {
-    # (21,0) in US Eastern Time
-    (1,0)
+    (23,50)
 }
 
-elon_times = {
-    (12,0),
-    (3,0),
-    (21, 30)
-}
+
+
