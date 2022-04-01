@@ -26,3 +26,8 @@ andfrom now on, if push frim Pycharm rejected, it most likely to mean that fro G
 
 ## About Justin Prg
 
+Things Justin Prg do
+
+- creating contents
+- replying to its on tweet
+- replying to elons tweet
