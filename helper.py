@@ -199,6 +199,7 @@ def send_reply(order,curr_id, user):
                 break
 
         # tweet the result
+        result = re.sub('@[a-zA-Z_0-9]*', '', result)
         result = f'@{user}' + ' ' + result
         result = re.sub('\n', '', result)
         result=process_str(result)
@@ -233,7 +234,7 @@ def send_reply(order,curr_id, user):
         update_json("tweet", result, str(e), "send_reply")
         #git_push("updated tweet_errors")
 
-def construct_order(tw_id):
+def construct_conv_order(tw_id):
     chats = []
     rd = api.get_status(id=tw_id)
     while True:
@@ -243,12 +244,12 @@ def construct_order(tw_id):
             data = rd._json
 
         text = data['text']
-        text = re.sub('@[a-zA-Z_0-9]*', '', text)
+        #text = re.sub('@[a-zA-Z_0-9]*', '', text)
         user = data['user']['screen_name']
         if user == 'Justin_prg':
             user = 'You'
         else:
-            user = 'Friend'
+            pass
 
         chats.append(f"{user}:{text}")
 
