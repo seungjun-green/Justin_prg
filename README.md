@@ -20,3 +20,5 @@ Open GCP terminal, and pull to update the code to recent one. Then run the code.
 Currently, I'm getting emial notification for push.(it could be either from Pycharm-updating code, or gcp-updating error log file)
 
 
+andfrom now on, if push frim Pycharm rejected, it most likely to mean that fro GCP it had updated error file and pushed it. and you havent pulled those update to pycharm yet.
+

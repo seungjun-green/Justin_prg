@@ -51,21 +51,24 @@ def elon():
         time.sleep(15)
 
 
-if __name__ == "__main__":
-    print("Start of the program")
-    processes = []
-    p1 = multiprocessing.Process(target=tweet)
-    p1.start()
-    processes.append(p1)
+# if __name__ == "__main__":
+#     print("Start of the program")
+#     processes = []
+#     p1 = multiprocessing.Process(target=tweet)
+#     p1.start()
+#     processes.append(p1)
+#
+#     p2=multiprocessing.Process(target=reply)
+#     p2.start()
+#     processes.append(p2)
+#
+#     p3 = multiprocessing.Process(target=elon)
+#     p3.start()
+#     processes.append(p3)
+#
+#     for process in processes:
+#         process.join()
 
-    p2=multiprocessing.Process(target=reply)
-    p2.start()
-    processes.append(p2)
 
-    # p3 = multiprocessing.Process(target=elon)
-    # p3.start()
-    # processes.append(p3)
 
-    for process in processes:
-        process.join()
-
+rr = api.user_timeline(screen_name="marsyrprogress", count=1)

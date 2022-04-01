@@ -13,6 +13,9 @@ from git import Repo
 import git
 
 
+
+engine = "text-davinci-002"
+
 def git_push(changes):
     try:
         repo = Repo(".")
@@ -67,7 +70,7 @@ def dev_order(tag):
 
 def get_random_word():
     response = openai.Completion.create(
-  engine="text-davinci-001",
+  engine=engine,
   prompt="Give me a random noun word",
   temperature=0.66,
   max_tokens=64,
@@ -134,7 +137,7 @@ def send_tweet(order, a,b,c,d,e):
     try:
         while True:
             response = openai.Completion.create(
-                engine="text-davinci-001",
+                engine=engine,
                 prompt=order,
                 temperature=a,
                 max_tokens=b,
@@ -153,7 +156,7 @@ def send_tweet(order, a,b,c,d,e):
     except openai.error.OpenAIError as e:
         print(f"[send_tweet] openAI Error: {e}\n")
         update_json("openai", order, str(e), "send_tweet")
-        git_push("updated openai_errors")
+        #git_push("updated openai_errors")
 
     # tweet the result
     try:
@@ -178,7 +181,7 @@ def send_tweet(order, a,b,c,d,e):
     except twitter.errors.TweepyException as e:
         print(f"[send_tweet] Twitter Error: {e} \n")
         update_json("tweet",result, str(e), "send_tweet")
-        git_push("updated tweet_errors")
+        #git_push("updated tweet_errors")
 
 def send_reply(order,curr_id, user):
     result = ""
@@ -188,7 +191,7 @@ def send_reply(order,curr_id, user):
     try:
         while True:
             response = openai.Completion.create(
-                engine="text-davinci-001",
+                engine=engine,
                 prompt=order,
                 temperature=0.5,
                 max_tokens=60,
@@ -212,7 +215,7 @@ def send_reply(order,curr_id, user):
     except openai.OpenAIError as e:
         print(f"[send_reply] openAI Error: {e}")
         update_json("openai", order, str(e), "send_reply")
-        git_push("updated openai_errors")
+        #git_push("updated openai_errors")
 
     # tweet the reply
     try:
@@ -237,7 +240,7 @@ def send_reply(order,curr_id, user):
     except twitter.errors.TweepyException as e:
         print(f"[send_reply] Twitter Error: {e}\n")
         update_json("tweet", result, str(e), "send_reply")
-        git_push("updated tweet_errors")
+        #git_push("updated tweet_errors")
 
 def construct_order(tw_id):
     chats = []
@@ -308,13 +311,15 @@ def get_elons_tweets():
         rd = api.user_timeline(screen_name="elonmusk", count=1)
         print(f"elon - first Time: {len(rd)}")
         for dot in rd:
-            elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
+            if dot._json['in_reply_to_status_id'] is None:
+                elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
         Data.elon_firstTime = False
     else:
         rd = api.user_timeline(screen_name="elonmusk", since_id=Data.elon_last_id)
         print(f"elon - second Time: {len(rd)}")
         for dot in rd:
-            elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
+            if dot._json['in_reply_to_status_id'] is None:
+                elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
 
     return elons
 
