@@ -16,4 +16,4 @@ Every 15 seconds, it check whetehr it got a reply tweet to its on tweet. If yes 
 
 - **replying to elons tweet**
 
-Every 15 seconds, it check whether Elon Musk tweeted a tweet.(Only nature tweet, not reply to others tweet). Due to some enginerring limitation, it can reply to Elon's reply tweet only at first time.
+Every 15 seconds, it check whether Elon Musk tweeted a tweet.(Only nature tweet, not reply to others tweet). Due to some enginerring limitation, it can reply to Elon's reply tweet only when you first started running this program
