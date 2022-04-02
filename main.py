@@ -26,6 +26,7 @@ def tweet():
         time.sleep(60)
 
 def reply():
+    # get the replies to its tweet, and reply to them
     while True:
         replies = helper.get_replies()
 
@@ -40,6 +41,7 @@ def reply():
 
 
 def elon():
+    # get recent tweets of elonmusk, and reply to it
     while True:
         elons = helper.get_elons_tweets()
         for i, reply in enumerate(elons):
