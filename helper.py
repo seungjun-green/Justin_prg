@@ -108,10 +108,7 @@ def create_order(type):
         if str.endswith('CNBC'):
             str=str[:-7]
 
-        str=f"Friend:Feel free to express your emotion on: {str}\nYou:"
-        new_things.append(str)
-
-        return new_things, (0.5,60,1,0.5,0)
+        return [f"Friend:Feel free to express your emotion on: {str}\nYou:"], (0.5,60,1,0.5,0)
 
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
@@ -122,7 +119,7 @@ api = twitter.API(auth)
 def send_tweet(order, a,b,c,d,e):
     result = ""
     count = 0
-    print(f"the order is {order}")
+    print(f"the order is:\n {order}")
 
     # get the response
     try:
@@ -283,7 +280,17 @@ class Data:
 def get_replies():
     replies = []
     if Data.firstTime:
-        rd = api.mentions_timeline(count=1)
+
+        # len(rd) should be 1 all the time,no matter wgat, but due to some error of Twitter API which say there was any no recent tweet, added While True block
+        # from the second time it is OK for such error happening. Because at first time it have to update recent id. Which will be used in second time
+        while True:
+            rd = api.mentions_timeline(count=1)
+            if len(rd) == 1:
+                break
+            else:
+                time.sleep(2)
+
+
         print(f"reply-first Time: {len(rd)}")
         for dot in rd:
             replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
@@ -300,7 +307,14 @@ def get_replies():
 def get_elons_tweets():
     elons=[]
     if Data.elon_firstTime:
-        rd = api.user_timeline(screen_name="elonmusk", count=1)
+        # len(rd) should be 1 all the time,no matter wgat, but due to some error of Twitter API which say there was any no recent tweet, added While True block
+        # from the second time it is for such error happening. Because at first time it have to update recent id. Which will be used in secind time
+        while True:
+            rd = api.user_timeline(screen_name="elonmusk", count=1)
+            if len(rd) == 1:
+                break
+            else:
+                time.sleep(2)
         print(f"elon - first Time: {len(rd)}")
         for dot in rd:
             elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
