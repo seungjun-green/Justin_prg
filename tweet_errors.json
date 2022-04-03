@@ -50,5 +50,10 @@
         "curr": "second time-get replies",
         "error": "400 Bad Request\n44 - since_id parameter is invalid.",
         "func": "get_replies"
+    },
+    "03/04/2022-19:14:15": {
+        "curr": "@elonmusk ",
+        "error": "403 Forbidden\n170 - Missing required parameter: status.",
+        "func": "send_reply"
     }
 }
