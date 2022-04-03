@@ -40,5 +40,10 @@
         "curr": "@lacuspual Hey there! How are you?",
         "error": "403 Forbidden\n187 - Status is a duplicate.",
         "func": "send_reply"
+    },
+    "02/04/2022-09:54:26": {
+        "curr": "@dev_seungjun     I don't know.",
+        "error": "403 Forbidden\n187 - Status is a duplicate.",
+        "func": "send_reply"
     }
 }
