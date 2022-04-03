@@ -2,5 +2,10 @@
     "testting": {
         "error": "server error",
         "time": "5am"
+    },
+    "03/04/2022-19:56:23": {
+        "curr": "dddd",
+        "error": "23",
+        "func": "send_tweet"
     }
 }

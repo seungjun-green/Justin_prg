@@ -55,5 +55,25 @@
         "curr": "@elonmusk ",
         "error": "403 Forbidden\n170 - Missing required parameter: status.",
         "func": "send_reply"
+    },
+    "03/04/2022-19:46:32": {
+        "curr": "@dev_seungjun    I am not a bot.",
+        "error": "403 Forbidden\n187 - Status is a duplicate.",
+        "func": "send_reply"
+    },
+    "03/04/2022-19:52:36": {
+        "curr": "",
+        "error": "403 Forbidden\n170 - Missing required parameter: status.",
+        "func": "send_reply"
+    },
+    "03/04/2022-19:53:17": {
+        "curr": "",
+        "error": "403 Forbidden\n170 - Missing required parameter: status.",
+        "func": "send_reply"
+    },
+    "03/04/2022-19:54:29": {
+        "curr": "",
+        "error": "403 Forbidden\n170 - Missing required parameter: status.",
+        "func": "send_reply"
     }
 }
