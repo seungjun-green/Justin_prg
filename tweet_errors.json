@@ -51,6 +51,7 @@
         "error": "400 Bad Request\n44 - since_id parameter is invalid.",
         "func": "get_replies"
     },
+<<<<<<< HEAD
     "03/04/2022-06:17:42": {
         "curr": "@lacuspual Heads.",
         "error": "403 Forbidden\n187 - Status is a duplicate.",
@@ -59,6 +60,11 @@
     "03/04/2022-06:56:06": {
         "curr": "@liamprivate023   Best strategy I ever took was buying a little bit every day and increasing the amount of those\u2026 https://t.co/4xKbB5E7YQ</code>",
         "error": "400 Bad Request\n408 - The given URL is invalid.",
+=======
+    "03/04/2022-19:14:15": {
+        "curr": "@elonmusk ",
+        "error": "403 Forbidden\n170 - Missing required parameter: status.",
+>>>>>>> 1a53d393f8276883491b4d2121228ab186a0a3f8
         "func": "send_reply"
     }
 }

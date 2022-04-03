@@ -117,6 +117,7 @@ api = twitter.API(auth)
 
 
 def send_tweet(order, a,b,c,d,e):
+    # only used for creating contents - news!
     result = ""
     count = 0
     print(f"the order is:\n {order}")
@@ -131,7 +132,8 @@ def send_tweet(order, a,b,c,d,e):
                 max_tokens=b,
                 top_p=c,
                 frequency_penalty=d,
-                presence_penalty=e
+                presence_penalty=e,
+                stop=["Friend:"]
             )
 
             count += 1
@@ -171,10 +173,19 @@ def send_tweet(order, a,b,c,d,e):
         update_json("tweet",result, str(e), "send_tweet")
         #git_push("updated tweet_errors")
 
+
+
+def create_stop_seq(user):
+    celbs = {'elonmusk':["elonmusk:", "Elon Musk:", "Elon:", "elon:"]}
+    if user in celbs:
+        return celbs[user]
+    else:
+        return [f"{user}:"]
+
 def send_reply(order,curr_id, user):
     result = ""
     count = 0
-
+    stop = create_stop_seq(user)
     # get the response
     try:
         while True:
@@ -186,7 +197,7 @@ def send_reply(order,curr_id, user):
                 top_p=1,
                 frequency_penalty=0.5,
                 presence_penalty=0,
-                stop=["You:"]
+                stop=stop
             )
 
             count += 1
