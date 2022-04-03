@@ -36,7 +36,6 @@ def reply():
             if i==0:
                 helper.Data.lastReplied_id = curr_id
 
-
         time.sleep(15)
 
 
@@ -56,17 +55,17 @@ def elon():
 if __name__ == "__main__":
     print("Start of the program")
     processes = []
-    p1 = multiprocessing.Process(target=tweet)
-    p1.start()
-    processes.append(p1)
+    # p1 = multiprocessing.Process(target=tweet)
+    # p1.start()
+    # processes.append(p1)
 
     p2=multiprocessing.Process(target=reply)
     p2.start()
     processes.append(p2)
 
-    p3 = multiprocessing.Process(target=elon)
-    p3.start()
-    processes.append(p3)
+    # p3 = multiprocessing.Process(target=elon)
+    # p3.start()
+    # processes.append(p3)
 
     for process in processes:
         process.join()

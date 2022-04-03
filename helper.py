@@ -283,23 +283,31 @@ def get_replies():
 
         # len(rd) should be 1 all the time,no matter wgat, but due to some error of Twitter API which say there was any no recent tweet, added While True block
         # from the second time it is OK for such error happening. Because at first time it have to update recent id. Which will be used in second time
-        while True:
-            rd = api.mentions_timeline(count=1)
-            if len(rd) == 1:
-                break
-            else:
-                time.sleep(2)
+        try:
+            while True:
+                rd = api.mentions_timeline(count=1)
+                if len(rd) == 1:
+                    break
+                else:
+                    time.sleep(2)
 
 
-        print(f"reply-first Time: {len(rd)}")
-        for dot in rd:
-            replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
-        Data.firstTime = False
+            print(f"reply-first Time: {len(rd)}")
+            for dot in rd:
+                replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
+            Data.firstTime = False
+        except twitter.errors.TweepyException as e:
+            print(f"[get_replies] (First time) Twitter Error: {e}\n")
+            update_json("tweet","first time - get replies", str(e), "get_replies")
     else:
-        rd = api.mentions_timeline(since_id=Data.lastReplied_id)
-        print(f"reply-second Time: {len(rd)}")
-        for dot in rd:
-            replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
+        try:
+            rd = api.mentions_timeline(since_id=Data.lastReplied_id)
+            print(f"reply-second Time: {len(rd)}")
+            for dot in rd:
+                replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
+        except twitter.errors.TweepyException as e:
+            print(f"[get_replies] (Second time) Twitter Error: {e}\n")
+            update_json("tweet","second time - get replies", str(e), "get_replies")
 
 
     return replies
@@ -309,22 +317,31 @@ def get_elons_tweets():
     if Data.elon_firstTime:
         # len(rd) should be 1 all the time,no matter wgat, but due to some error of Twitter API which say there was any no recent tweet, added While True block
         # from the second time it is for such error happening. Because at first time it have to update recent id. Which will be used in secind time
-        while True:
-            rd = api.user_timeline(screen_name="elonmusk", count=1)
-            if len(rd) == 1:
-                break
-            else:
-                time.sleep(2)
-        print(f"elon - first Time: {len(rd)}")
-        for dot in rd:
-            elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
-        Data.elon_firstTime = False
-    else:
-        rd = api.user_timeline(screen_name="elonmusk", since_id=Data.elon_last_id)
-        print(f"elon - second Time: {len(rd)}")
-        for dot in rd:
-            if dot._json['in_reply_to_status_id'] is None:
+        try:
+            while True:
+                rd = api.user_timeline(screen_name="elonmusk", count=1)
+                if len(rd) == 1:
+                    break
+                else:
+                    time.sleep(2)
+            print(f"elon - first Time: {len(rd)}")
+            for dot in rd:
                 elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
+            Data.elon_firstTime = False
+        except twitter.errors.TweepyException as e:
+            print(f"[get_elons_tweets] (First time) Twitter Error: {e}\n")
+            update_json("tweet", "first time - get elons tweet", str(e), "get_elos_tweets")
+    else:
+        try:
+            rd = api.user_timeline(screen_name="elonmusk", since_id=Data.elon_last_id)
+            print(f"elon - second Time: {len(rd)}")
+            for dot in rd:
+                if dot._json['in_reply_to_status_id'] is None:
+                    elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
+
+        except twitter.errors.TweepyException as e:
+            print(f"[get_elons_tweets] (Second time) Twitter Error: {e}\n")
+            update_json("tweet", "second time - get elons tweet", str(e), "get_elos_tweets")
 
     return elons
 
