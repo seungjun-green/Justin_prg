@@ -52,16 +52,35 @@ def elon():
         time.sleep(15)
 
 
+
+
+'''
+** code when u decided to reply to multipe ceos and company **
+
+** and if u decided to do it, instead of using class for Each ones irst time and last replied use hashmap **
+
+def amazing():
+    while True:
+        for celb in celbs:
+            curr = helper.get_tweets_of(celb)
+            for i, reply in enumerate(curr):
+                curr_id, text, user = reply
+                helper.send_reply(helper.construct_conv_order(curr_id), curr_id, user)
+                if i == 0:
+                    helper.Data.timcook_last_id = curr_id
+'''
+
+
 if __name__ == "__main__":
     print("Start of the program")
     processes = []
-    # p1 = multiprocessing.Process(target=tweet)
-    # p1.start()
-    # processes.append(p1)
-    #
-    # p2=multiprocessing.Process(target=reply)
-    # p2.start()
-    # processes.append(p2)
+    p1 = multiprocessing.Process(target=tweet)
+    p1.start()
+    processes.append(p1)
+
+    p2=multiprocessing.Process(target=reply)
+    p2.start()
+    processes.append(p2)
 
     p3 = multiprocessing.Process(target=elon)
     p3.start()
