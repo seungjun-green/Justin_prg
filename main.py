@@ -38,15 +38,14 @@ def reply():
                 if i==0:
                     helper.record["reply"]["lastReplied_id"] = curr_id
         except:
-            print("Some error happend - reply")
+            helper.record["reply"]["firstTime"] = True
+            print("Some error happened - reply")
 
         time.sleep(15)
 
-
-
 def elon():
     # get recent tweets of elonmusk, and reply to it
-    celbs = ["engineers_feed"]
+    celbs = ["elonmusk","engineers_feed"]
     while True:
         for celb in celbs:
             try:
@@ -59,7 +58,8 @@ def elon():
                         helper.record[celb]["lastReplied_id"] = curr_id
             except:
                 # this try and excpet block is to make program keep running even though some error happend
-                print("Some error happend - celb")
+                helper.record[celb]["firstTime"] = True
+                print("Some error happened - celb")
 
         time.sleep(15)
 
