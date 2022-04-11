@@ -265,17 +265,14 @@ def construct_conv_order(tw_id):
             user = 'You'
         else:
             particpants.add(f'@{user}')
-            pass
 
         chats.append(f"{user}:{text}")
-
         parent_id = data['in_reply_to_status_id']
-
         if parent_id is None:
             break
 
         rd = api.get_status(id=parent_id)
-
+    print(chats)
     # reverse chats
     chats.reverse()
     order = ""
@@ -291,7 +288,12 @@ def construct_conv_order(tw_id):
     return order, particpants
 
 
-record = {"reply": {"firstTime": True, "lastReplied_id": 0}, "elonmusk": {"firstTime": True, "lastReplied_id": 0}}
+record = {
+    "reply": {"firstTime": True, "lastReplied_id": 0},
+    "elonmusk": {"firstTime": True, "lastReplied_id": 0},
+    "engineers_feed": {"firstTime": True, "lastReplied_id": 0},
+    "tim_cook": {"firstTime": True, "lastReplied_id": 0}
+}
 
 def get_replies():
     replies = []
@@ -334,7 +336,7 @@ def get_celb_tweets(celb):
         # from the second time it is for such error happening. Because at first time it have to update recent id. Which will be used in secind time
         try:
             rd = api.user_timeline(screen_name=celb, count=1)
-            print(f"elon - first Time: {len(rd)}")
+            print(f"{celb} - first Time: {len(rd)}")
             for dot in rd:
                 elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
             record[celb]["firstTime"] = False
@@ -344,7 +346,7 @@ def get_celb_tweets(celb):
     else:
         try:
             rd = api.user_timeline(screen_name=celb, since_id=record[celb]["lastReplied_id"])
-            print(f"elon - second Time: {len(rd)}")
+            print(f"{celb} - second Time: {len(rd)}")
             for dot in rd:
                 elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
 

@@ -28,51 +28,40 @@ def tweet():
 def reply():
     # get the replies to its tweet, and reply to them
     while True:
-        replies = helper.get_replies()
+        try:
+            replies = helper.get_replies()
 
-        for i, reply in enumerate(replies):
-            curr_id,text, user = reply
-            order, participants = helper.construct_conv_order(curr_id)
-            helper.send_reply(order, participants,curr_id, user)
-            if i==0:
-                helper.record["reply"]["lastReplied_id"] = curr_id
+            for i, reply in enumerate(replies):
+                curr_id,text, user = reply
+                order, participants = helper.construct_conv_order(curr_id)
+                helper.send_reply(order, participants,curr_id, user)
+                if i==0:
+                    helper.record["reply"]["lastReplied_id"] = curr_id
+        except:
+            print("Some error happend - reply")
 
         time.sleep(15)
 
-celbs = ['elonmusk']
+
 
 def elon():
     # get recent tweets of elonmusk, and reply to it
+    celbs = ["engineers_feed"]
     while True:
         for celb in celbs:
-            cleb_tweets = helper.get_celb_tweets(celb)
-            for i, reply in enumerate(cleb_tweets):
-                curr_id, text, user = reply
-                order, participants = helper.construct_conv_order(curr_id)
-                helper.send_reply(order, participants, curr_id, user)
-                if i == 0:
-                    helper.record[celb]["lastReplied_id"] = curr_id
+            try:
+                cleb_tweets = helper.get_celb_tweets(celb)
+                for i, reply in enumerate(cleb_tweets):
+                    curr_id, text, user = reply
+                    order, participants = helper.construct_conv_order(curr_id)
+                    helper.send_reply(order, participants, curr_id, user)
+                    if i == 0:
+                        helper.record[celb]["lastReplied_id"] = curr_id
+            except:
+                # this try and excpet block is to make program keep running even though some error happend
+                print("Some error happend - celb")
 
         time.sleep(15)
-
-
-
-
-'''
-** code when u decided to reply to multiple ceos and company**  
-
-** and if u decided to do it, instead of using class for Each ones irst time and last replied use hashmap **
-
-def amazing():
-    while True:
-        for celb in celbs:
-            currs = helper.get_tweets_of(celb)
-            for i, reply in enumerate(currs):
-                curr_id, text, user = reply
-                helper.send_reply(helper.construct_conv_order(curr_id), curr_id, user)
-                if i == 0:
-                    helper.Data.timcook_last_id = curr_id
-'''
 
 
 if __name__ == "__main__":
@@ -82,13 +71,13 @@ if __name__ == "__main__":
     # p1.start()
     # processes.append(p1)
 
-    p2=multiprocessing.Process(target=reply)
-    p2.start()
-    processes.append(p2)
+    # p2=multiprocessing.Process(target=reply)
+    # p2.start()
+    # processes.append(p2)
 
-    # p3 = multiprocessing.Process(target=elon)
-    # p3.start()
-    # processes.append(p3)
+    p3 = multiprocessing.Process(target=elon)
+    p3.start()
+    processes.append(p3)
 
     for process in processes:
         process.join()
