@@ -288,7 +288,6 @@ def construct_conv_order(tw_id):
     print(f"-------start of the order-------")
     print(order)
     print(f"-------end of the order-------\n")
-    print(f"particpants are {particpants}")
     return order, particpants
 
 class Data:
@@ -310,7 +309,6 @@ def get_replies():
                     break
                 else:
                     time.sleep(2)
-
 
             print(f"reply-first Time: {len(rd)}")
             for dot in rd:
@@ -338,12 +336,7 @@ def get_elons_tweets():
         # len(rd) should be 1 all the time,no matter wgat, but due to some error of Twitter API which say there was any no recent tweet, added While True block
         # from the second time it is for such error happening. Because at first time it have to update recent id. Which will be used in secind time
         try:
-            while True:
-                rd = api.user_timeline(screen_name="elonmusk", count=1)
-                if len(rd) == 1:
-                    break
-                else:
-                    time.sleep(2)
+            rd = api.user_timeline(screen_name="elonmusk", count=1)
             print(f"elon - first Time: {len(rd)}")
             for dot in rd:
                 elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
@@ -356,8 +349,7 @@ def get_elons_tweets():
             rd = api.user_timeline(screen_name="elonmusk", since_id=Data.elon_last_id)
             print(f"elon - second Time: {len(rd)}")
             for dot in rd:
-                if dot._json['in_reply_to_status_id'] is None:
-                    elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
+                elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
 
         except twitter.errors.TweepyException as e:
             print(f"[get_elons_tweets] (Second time) Twitter Error: {e}\n")
