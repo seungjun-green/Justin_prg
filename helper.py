@@ -170,7 +170,7 @@ def send_tweet(order, a,b,c,d,e):
         print('tweet-tweeted!')
     except twitter.errors.TweepyException as e:
         print(f"[send_tweet] Twitter Error: {e} \n")
-        update_json("tweet",result, str(e), "send_tweet")
+        #update_json("tweet",result, str(e), "send_tweet")
         #git_push("updated tweet_errors")
 
 
@@ -180,9 +180,10 @@ def create_stop_seq(user):
     if user in celbs:
         return celbs[user]
     else:
-        return [f"{user}:"]
+        # replying feature
+        return [f"{user}:", "You:"]
 
-def send_reply(order,curr_id, user):
+def send_reply(order,particpants,curr_id, user):
     result = ""
     count = 0
     stop = create_stop_seq(user)
@@ -208,13 +209,17 @@ def send_reply(order,curr_id, user):
 
         # tweet the result
         result = re.sub('@[a-zA-Z_0-9]*', '', result)
-        result = f'@{user}' + ' ' + result
+        taggins = ""
+        for particpant in particpants:
+            taggins+=f'{particpant} '
+
+        result = taggins + result
         result = re.sub('\n', '', result)
         result=process_str(result)
         print(f"My Reply: {result}")
     except openai.OpenAIError as e:
         print(f"[send_reply] openAI Error: {e}")
-        update_json("openai", order, str(e), "send_reply")
+        #update_json("openai", order, str(e), "send_reply")
         #git_push("updated openai_errors")
 
     # tweet the reply
@@ -239,12 +244,13 @@ def send_reply(order,curr_id, user):
             print("reply-tweeted! \n")
     except twitter.errors.TweepyException as e:
         print(f"[send_reply] Twitter Error: {e}\n")
-        update_json("tweet", result, str(e), "send_reply")
+        #update_json("tweet", result, str(e), "send_reply")
         #git_push("updated tweet_errors")
 
 
 def construct_conv_order(tw_id):
     chats = []
+    particpants = set()
     rd = api.get_status(id=tw_id)
     while True:
         try:
@@ -258,6 +264,7 @@ def construct_conv_order(tw_id):
         if user == 'Justin_prg':
             user = 'You'
         else:
+            particpants.add(f'@{user}')
             pass
 
         chats.append(f"{user}:{text}")
@@ -281,7 +288,8 @@ def construct_conv_order(tw_id):
     print(f"-------start of the order-------")
     print(order)
     print(f"-------end of the order-------\n")
-    return order
+    print(f"particpants are {particpants}")
+    return order, particpants
 
 class Data:
     firstTime = True
@@ -310,7 +318,7 @@ def get_replies():
             Data.firstTime = False
         except twitter.errors.TweepyException as e:
             print(f"[get_replies] (First time) Twitter Error: {e}\n")
-            update_json("tweet","first time - get replies", str(e), "get_replies")
+            #update_json("tweet","first time - get replies", str(e), "get_replies")
     else:
         try:
             rd = api.mentions_timeline(since_id=Data.lastReplied_id)
@@ -319,7 +327,7 @@ def get_replies():
                 replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
         except twitter.errors.TweepyException as e:
             print(f"[get_replies] (Second time) Twitter Error: {e}\n")
-            update_json("tweet","second time - get replies", str(e), "get_replies")
+            #update_json("tweet","second time - get replies", str(e), "get_replies")
 
 
     return replies
@@ -342,7 +350,7 @@ def get_elons_tweets():
             Data.elon_firstTime = False
         except twitter.errors.TweepyException as e:
             print(f"[get_elons_tweets] (First time) Twitter Error: {e}\n")
-            update_json("tweet", "first time - get elons tweet", str(e), "get_elos_tweets")
+            #update_json("tweet", "first time - get elons tweet", str(e), "get_elos_tweets")
     else:
         try:
             rd = api.user_timeline(screen_name="elonmusk", since_id=Data.elon_last_id)
@@ -353,7 +361,7 @@ def get_elons_tweets():
 
         except twitter.errors.TweepyException as e:
             print(f"[get_elons_tweets] (Second time) Twitter Error: {e}\n")
-            update_json("tweet", "second time - get elons tweet", str(e), "get_elos_tweets")
+            #update_json("tweet", "second time - get elons tweet", str(e), "get_elos_tweets")
 
     return elons
 

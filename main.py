@@ -32,7 +32,8 @@ def reply():
 
         for i, reply in enumerate(replies):
             curr_id,text, user = reply
-            helper.send_reply(helper.construct_conv_order(curr_id),curr_id, user)
+            order, participants = helper.construct_conv_order(curr_id)
+            helper.send_reply(order, participants,curr_id, user)
             if i==0:
                 helper.Data.lastReplied_id = curr_id
 
@@ -45,7 +46,8 @@ def elon():
         elons = helper.get_elons_tweets()
         for i, reply in enumerate(elons):
                 curr_id, text, user = reply
-                helper.send_reply(helper.construct_conv_order(curr_id), curr_id, user)
+                order, participants = helper.construct_conv_order(curr_id)
+                helper.send_reply(order, participants, curr_id, user)
                 if i == 0:
                     helper.Data.elon_last_id = curr_id
 
@@ -53,17 +55,17 @@ def elon():
 
 
 
-
+celbs = ['elonmusk']
 '''
-** code when u decided to reply to multipe ceos and company **
+** code when u decided to reply to multiple ceos and company**  
 
 ** and if u decided to do it, instead of using class for Each ones irst time and last replied use hashmap **
 
 def amazing():
     while True:
         for celb in celbs:
-            curr = helper.get_tweets_of(celb)
-            for i, reply in enumerate(curr):
+            currs = helper.get_tweets_of(celb)
+            for i, reply in enumerate(currs):
                 curr_id, text, user = reply
                 helper.send_reply(helper.construct_conv_order(curr_id), curr_id, user)
                 if i == 0:
@@ -74,13 +76,13 @@ def amazing():
 if __name__ == "__main__":
     print("Start of the program\n\n")
     processes = []
-    p1 = multiprocessing.Process(target=tweet)
-    p1.start()
-    processes.append(p1)
+    # p1 = multiprocessing.Process(target=tweet)
+    # p1.start()
+    # processes.append(p1)
 
-    p2=multiprocessing.Process(target=reply)
-    p2.start()
-    processes.append(p2)
+    # p2=multiprocessing.Process(target=reply)
+    # p2.start()
+    # processes.append(p2)
 
     p3 = multiprocessing.Process(target=elon)
     p3.start()
