@@ -35,27 +35,29 @@ def reply():
             order, participants = helper.construct_conv_order(curr_id)
             helper.send_reply(order, participants,curr_id, user)
             if i==0:
-                helper.Data.lastReplied_id = curr_id
+                helper.record["reply"]["lastReplied_id"] = curr_id
 
         time.sleep(15)
 
+celbs = ['elonmusk']
 
 def elon():
     # get recent tweets of elonmusk, and reply to it
     while True:
-        elons = helper.get_elons_tweets()
-        for i, reply in enumerate(elons):
+        for celb in celbs:
+            cleb_tweets = helper.get_celb_tweets(celb)
+            for i, reply in enumerate(cleb_tweets):
                 curr_id, text, user = reply
                 order, participants = helper.construct_conv_order(curr_id)
                 helper.send_reply(order, participants, curr_id, user)
                 if i == 0:
-                    helper.Data.elon_last_id = curr_id
+                    helper.record[celb]["lastReplied_id"] = curr_id
 
         time.sleep(15)
 
 
 
-celbs = ['elonmusk']
+
 '''
 ** code when u decided to reply to multiple ceos and company**  
 
@@ -80,13 +82,13 @@ if __name__ == "__main__":
     # p1.start()
     # processes.append(p1)
 
-    # p2=multiprocessing.Process(target=reply)
-    # p2.start()
-    # processes.append(p2)
+    p2=multiprocessing.Process(target=reply)
+    p2.start()
+    processes.append(p2)
 
-    p3 = multiprocessing.Process(target=elon)
-    p3.start()
-    processes.append(p3)
+    # p3 = multiprocessing.Process(target=elon)
+    # p3.start()
+    # processes.append(p3)
 
     for process in processes:
         process.join()

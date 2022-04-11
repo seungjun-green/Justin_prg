@@ -290,15 +290,12 @@ def construct_conv_order(tw_id):
     print(f"-------end of the order-------\n")
     return order, particpants
 
-class Data:
-    firstTime = True
-    lastReplied_id = 0
-    elon_last_id = 0
-    elon_firstTime=True
+
+record = {"reply": {"firstTime": True, "lastReplied_id": 0}, "elonmusk": {"firstTime": True, "lastReplied_id": 0}}
 
 def get_replies():
     replies = []
-    if Data.firstTime:
+    if record["reply"]["firstTime"]:
 
         # len(rd) should be 1 all the time,no matter wgat, but due to some error of Twitter API which say there was any no recent tweet, added While True block
         # from the second time it is OK for such error happening. Because at first time it have to update recent id. Which will be used in second time
@@ -313,13 +310,13 @@ def get_replies():
             print(f"reply-first Time: {len(rd)}")
             for dot in rd:
                 replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
-            Data.firstTime = False
+            record["reply"]["firstTime"] = False
         except twitter.errors.TweepyException as e:
             print(f"[get_replies] (First time) Twitter Error: {e}\n")
             #update_json("tweet","first time - get replies", str(e), "get_replies")
     else:
         try:
-            rd = api.mentions_timeline(since_id=Data.lastReplied_id)
+            rd = api.mentions_timeline(since_id=record["reply"]["lastReplied_id"])
             print(f"reply-second Time: {len(rd)}")
             for dot in rd:
                 replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
@@ -330,23 +327,23 @@ def get_replies():
 
     return replies
 
-def get_elons_tweets():
+def get_celb_tweets(celb):
     elons=[]
-    if Data.elon_firstTime:
+    if record[celb]["firstTime"]:
         # len(rd) should be 1 all the time,no matter wgat, but due to some error of Twitter API which say there was any no recent tweet, added While True block
         # from the second time it is for such error happening. Because at first time it have to update recent id. Which will be used in secind time
         try:
-            rd = api.user_timeline(screen_name="elonmusk", count=1)
+            rd = api.user_timeline(screen_name=celb, count=1)
             print(f"elon - first Time: {len(rd)}")
             for dot in rd:
                 elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
-            Data.elon_firstTime = False
+            record[celb]["firstTime"] = False
         except twitter.errors.TweepyException as e:
             print(f"[get_elons_tweets] (First time) Twitter Error: {e}\n")
             #update_json("tweet", "first time - get elons tweet", str(e), "get_elos_tweets")
     else:
         try:
-            rd = api.user_timeline(screen_name="elonmusk", since_id=Data.elon_last_id)
+            rd = api.user_timeline(screen_name=celb, since_id=record[celb]["lastReplied_id"])
             print(f"elon - second Time: {len(rd)}")
             for dot in rd:
                 elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
