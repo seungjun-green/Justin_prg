@@ -11,11 +11,10 @@ import json
 import time
 from git import Repo
 import git
-import collections
 
 production = False
 engine = "text-davinci-002"
-celbs = {
+celbs_name = {
     "elonmusk":["elonmusk:", "Elon Musk:", "Elon:", "elon:"],
     "lexfridman": ["lexfridman","Lex"],
 }
@@ -27,7 +26,6 @@ record = {
     "tim_cook": {"firstTime": True, "lastReplied_id": 0},
     "lexfridman": {"firstTime": True, "lastReplied_id": 0}
 }
-
 
 
 def git_push(changes):
@@ -193,8 +191,8 @@ def send_tweet(order, a,b,c,d,e):
 
 
 def create_stop_seq(user):
-    if user in celbs:
-        return celbs[user]
+    if user in celbs_name:
+        return celbs_name[user]
     else:
         # replying feature
         return [f"{user}:", "You:"]

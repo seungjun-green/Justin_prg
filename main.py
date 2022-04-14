@@ -10,6 +10,8 @@ auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 openai.api_key = keys.ai_key
 
+celbs = ["elonmusk","engineers_feed", "lexfridman"]
+
 def tweet():
     # create a content and tweet it
     while True:
@@ -45,7 +47,6 @@ def reply():
 
 def elon():
     # get recent tweets of elonmusk, and reply to it
-    celbs = ["elonmusk","engineers_feed"]
     while True:
         for celb in celbs:
             try:
@@ -62,8 +63,6 @@ def elon():
                 print("Some error happened - celb")
 
         time.sleep(15)
-
-
 
 if __name__ == "__main__":
     print("Start of the program\n\n")
