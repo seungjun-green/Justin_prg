@@ -149,29 +149,32 @@ def send_tweet(order, a,b,c,d,e):
         #git_push("updated openai_errors")
 
     # tweet the result
-    try:
-        # if result is longer than 280 characters
-        if len(result) > 280:
-            split_strings = []
-            for index in range(0, len(result), 270):
-                split_strings.append(result[index: index + 270])
+    if production:
+        try:
+            # if result is longer than 280 characters
+            if len(result) > 280:
+                split_strings = []
+                for index in range(0, len(result), 270):
+                    split_strings.append(result[index: index + 270])
 
-            for i, sub_str in enumerate(split_strings):
-                if i == 0:
-                    api.update_status(sub_str)
-                else:
-                    result = api.user_timeline(user_id='justin_prg', count=1)
-                    recent_id = result[0]._json['id']
-                    api.update_status(status=sub_str, in_reply_to_status_id=recent_id)
+                for i, sub_str in enumerate(split_strings):
+                    if i == 0:
+                        api.update_status(sub_str)
+                    else:
+                        result = api.user_timeline(user_id='justin_prg', count=1)
+                        recent_id = result[0]._json['id']
+                        api.update_status(status=sub_str, in_reply_to_status_id=recent_id)
 
-        # if result is shorter than 280 characters
-        else:
-            api.update_status(result)
-        print('tweet-tweeted!')
-    except twitter.errors.TweepyException as e:
-        print(f"[send_tweet] Twitter Error: {e} \n")
-        #update_json("tweet",result, str(e), "send_tweet")
-        #git_push("updated tweet_errors")
+            # if result is shorter than 280 characters
+            else:
+                api.update_status(result)
+            print('tweet-tweeted!')
+        except twitter.errors.TweepyException as e:
+            print(f"[send_tweet] Twitter Error: {e} \n")
+            #update_json("tweet",result, str(e), "send_tweet")
+            #git_push("updated tweet_errors")
+    else:
+        print("Content tweeted - Development mode")
 
 
 
@@ -182,6 +185,9 @@ def create_stop_seq(user):
     else:
         # replying feature
         return [f"{user}:", "You:"]
+
+
+production = False
 
 def send_reply(order,particpants,curr_id, user):
     result = ""
@@ -223,29 +229,32 @@ def send_reply(order,particpants,curr_id, user):
         #git_push("updated openai_errors")
 
     # tweet the reply
-    try:
-        if len(result) > 280:
-            split_strings = []
-            for index in range(0, len(result), 270):
-                split_strings.append(result[index: index + 270])
+    if production:
+        try:
+            if len(result) > 280:
+                split_strings = []
+                for index in range(0, len(result), 270):
+                    split_strings.append(result[index: index + 270])
 
-            for i, sub_str in enumerate(split_strings):
-                if i == 0:
-                    api.update_status(status=sub_str, in_reply_to_status_id=curr_id)
+                for i, sub_str in enumerate(split_strings):
+                    if i == 0:
+                        api.update_status(status=sub_str, in_reply_to_status_id=curr_id)
 
-                else:
-                    result = api.user_timeline(user_id='justin_prg', count=1)
-                    recent_id = result[0]._json['id']
-                    api.update_status(status=sub_str, in_reply_to_status_id=recent_id)
+                    else:
+                        result = api.user_timeline(user_id='justin_prg', count=1)
+                        recent_id = result[0]._json['id']
+                        api.update_status(status=sub_str, in_reply_to_status_id=recent_id)
 
-        # if result is shorter than 280 characters
-        else:
-            api.update_status(status=result, in_reply_to_status_id=curr_id)
-            print("reply-tweeted! \n")
-    except twitter.errors.TweepyException as e:
-        print(f"[send_reply] Twitter Error: {e}\n")
-        #update_json("tweet", result, str(e), "send_reply")
-        #git_push("updated tweet_errors")
+            # if result is shorter than 280 characters
+            else:
+                api.update_status(status=result, in_reply_to_status_id=curr_id)
+                print("reply-tweeted! \n")
+        except twitter.errors.TweepyException as e:
+            print(f"[send_reply] Twitter Error: {e}\n")
+            #update_json("tweet", result, str(e), "send_reply")
+            #git_push("updated tweet_errors")
+    else:
+        print("reply tweeted - Development mode")
 
 
 def construct_conv_order(tw_id):
