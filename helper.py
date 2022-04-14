@@ -12,8 +12,11 @@ import time
 from git import Repo
 import git
 
-production = False
+production = True
 engine = "text-davinci-002"
+
+celbs = ["elonmusk","engineers_feed", "lexfridman"]
+
 celbs_name = {
     "elonmusk":["elonmusk:", "Elon Musk:", "Elon:", "elon:"],
     "lexfridman": ["lexfridman","Lex"],

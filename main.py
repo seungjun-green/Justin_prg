@@ -10,7 +10,7 @@ auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 openai.api_key = keys.ai_key
 
-celbs = ["elonmusk","engineers_feed", "lexfridman"]
+
 
 def tweet():
     # create a content and tweet it
@@ -48,7 +48,7 @@ def reply():
 def elon():
     # get recent tweets of elonmusk, and reply to it
     while True:
-        for celb in celbs:
+        for celb in helper.celbs:
             try:
                 cleb_tweets = helper.get_celb_tweets(celb)
                 for i, reply in enumerate(cleb_tweets):
