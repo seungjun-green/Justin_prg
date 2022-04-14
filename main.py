@@ -38,6 +38,7 @@ def reply():
                 if i==0:
                     helper.record["reply"]["lastReplied_id"] = curr_id
         except:
+
             helper.record["reply"]["firstTime"] = True
             print("Some error happened - reply")
 
@@ -76,9 +77,9 @@ if __name__ == "__main__":
     p2.start()
     processes.append(p2)
 
-    p3 = multiprocessing.Process(target=elon)
-    p3.start()
-    processes.append(p3)
+    # p3 = multiprocessing.Process(target=elon)
+    # p3.start()
+    # processes.append(p3)
 
     for process in processes:
         process.join()

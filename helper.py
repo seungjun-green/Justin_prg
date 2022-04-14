@@ -11,10 +11,24 @@ import json
 import time
 from git import Repo
 import git
+import collections
 
-
-
+production = False
 engine = "text-davinci-002"
+celbs = {
+    "elonmusk":["elonmusk:", "Elon Musk:", "Elon:", "elon:"],
+    "lexfridman": ["lexfridman","Lex"],
+}
+
+record = {
+    "reply": {"firstTime": True, "lastReplied_id": 0},
+    "elonmusk": {"firstTime": True, "lastReplied_id": 0},
+    "engineers_feed": {"firstTime": True, "lastReplied_id": 0},
+    "tim_cook": {"firstTime": True, "lastReplied_id": 0},
+    "lexfridman": {"firstTime": True, "lastReplied_id": 0}
+}
+
+
 
 def git_push(changes):
     try:
@@ -174,12 +188,11 @@ def send_tweet(order, a,b,c,d,e):
             #update_json("tweet",result, str(e), "send_tweet")
             #git_push("updated tweet_errors")
     else:
-        print("Content tweeted - Development mode")
+        print("Content tweeted - Development mode\n")
 
 
 
 def create_stop_seq(user):
-    celbs = {'elonmusk':["elonmusk:", "Elon Musk:", "Elon:", "elon:"]}
     if user in celbs:
         return celbs[user]
     else:
@@ -187,7 +200,6 @@ def create_stop_seq(user):
         return [f"{user}:", "You:"]
 
 
-production = False
 
 def send_reply(order,particpants,curr_id, user):
     result = ""
@@ -254,7 +266,7 @@ def send_reply(order,particpants,curr_id, user):
             #update_json("tweet", result, str(e), "send_reply")
             #git_push("updated tweet_errors")
     else:
-        print("reply tweeted - Development mode")
+        print("reply tweeted - Development mode\n")
 
 
 def construct_conv_order(tw_id):
@@ -281,7 +293,6 @@ def construct_conv_order(tw_id):
             break
 
         rd = api.get_status(id=parent_id)
-    print(chats)
     # reverse chats
     chats.reverse()
     order = ""
@@ -291,18 +302,13 @@ def construct_conv_order(tw_id):
         order += chat
 
     order+='You:'
-    print(f"-------start of the order-------")
+    print("\n-------start of the order-------")
     print(order)
-    print(f"-------end of the order-------\n")
+    print("-------end of the order-------\n")
     return order, particpants
 
 
-record = {
-    "reply": {"firstTime": True, "lastReplied_id": 0},
-    "elonmusk": {"firstTime": True, "lastReplied_id": 0},
-    "engineers_feed": {"firstTime": True, "lastReplied_id": 0},
-    "tim_cook": {"firstTime": True, "lastReplied_id": 0}
-}
+
 
 def get_replies():
     replies = []
@@ -311,13 +317,7 @@ def get_replies():
         # len(rd) should be 1 all the time,no matter wgat, but due to some error of Twitter API which say there was any no recent tweet, added While True block
         # from the second time it is OK for such error happening. Because at first time it have to update recent id. Which will be used in second time
         try:
-            while True:
-                rd = api.mentions_timeline(count=1)
-                if len(rd) == 1:
-                    break
-                else:
-                    time.sleep(2)
-
+            rd = api.mentions_timeline(count=1)
             print(f"reply-first Time: {len(rd)}")
             for dot in rd:
                 replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
@@ -328,7 +328,8 @@ def get_replies():
     else:
         try:
             rd = api.mentions_timeline(since_id=record["reply"]["lastReplied_id"])
-            print(f"reply-second Time: {len(rd)}")
+            if (len(rd) > 0):
+                print(f"reply-second Time: {len(rd)}")
             for dot in rd:
                 replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
         except twitter.errors.TweepyException as e:
@@ -355,7 +356,10 @@ def get_celb_tweets(celb):
     else:
         try:
             rd = api.user_timeline(screen_name=celb, since_id=record[celb]["lastReplied_id"])
-            print(f"{celb} - second Time: {len(rd)}")
+            if (len(rd) > 0):
+                print(f"{celb} - second Time: {len(rd)}")
+
+
             for dot in rd:
                 elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
 
