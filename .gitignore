@@ -1,4 +1,4 @@
 # Project exclude paths
 /venv/
-keys.py
+"keys.py"
 keys
