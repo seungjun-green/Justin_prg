@@ -8,9 +8,7 @@ import multiprocessing
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
-openai.api_key = keys.ai_key
-
-
+# openai.api_key = keys.ai_key
 
 def tweet():
     # create a content and tweet it
@@ -64,20 +62,20 @@ def elon():
 
         time.sleep(15)
 
-if __name__ == "__main__":
-    print("Start of the program\n\n")
-    processes = []
-    # p1 = multiprocessing.Process(target=tweet)
-    # p1.start()
-    # processes.append(p1)
-
-    p2=multiprocessing.Process(target=reply)
-    p2.start()
-    processes.append(p2)
-
-    # p3 = multiprocessing.Process(target=elon)
-    # p3.start()
-    # processes.append(p3)
-
-    for process in processes:
-        process.join()
+# if __name__ == "__main__":
+#     print("Start of the program\n\n")
+#     processes = []
+#     # p1 = multiprocessing.Process(target=tweet)
+#     # p1.start()
+#     # processes.append(p1)
+#
+#     p2=multiprocessing.Process(target=reply)
+#     p2.start()
+#     processes.append(p2)
+#
+#     # p3 = multiprocessing.Process(target=elon)
+#     # p3.start()
+#     # processes.append(p3)
+#
+#     for process in processes:
+#         process.join()

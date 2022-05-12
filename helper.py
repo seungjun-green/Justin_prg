@@ -12,7 +12,7 @@ import time
 from git import Repo
 import git
 
-production = True
+production = False
 engine = "text-davinci-002"
 
 celbs = ["elonmusk","engineers_feed", "lexfridman"]
@@ -376,5 +376,3 @@ def process_str(str):
         return str
     else:
         return str[:last]
-
-
