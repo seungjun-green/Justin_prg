@@ -5,8 +5,7 @@ import helper
 import time
 import sys
 import multiprocessing
-sys.path.insert(1,'/Users/seungjunlee/Downloads')
-import JP_keys
+from testing import newss as keys
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
