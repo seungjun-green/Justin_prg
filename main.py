@@ -81,3 +81,6 @@ def elon():
 #
 #     for process in processes:
 #         process.join()
+
+
+api.update_status("testing testing testing ~~~")
