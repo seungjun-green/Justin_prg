@@ -32,30 +32,6 @@ record = {
 }
 
 
-def git_push(changes):
-    try:
-        repo = Repo(".")
-        repo.git.add(update=True)
-        repo.index.commit(changes)
-        origin = repo.remote(name='origin')
-        origin.push()
-    except git.GitError as e:
-        print(f'error: {e}')
-
-def update_json(type_, txt, error, func_name):
-    file_name = f"{type_}_errors.json"
-    with open(file_name) as json_file:
-        errors = json.load(json_file)
-        curr_date = date.today().strftime("%d/%m/%Y")
-        curr_time = time.strftime("%H:%M:%S", time.localtime())
-        errors[curr_date+'-'+curr_time] = {"curr": txt, "error": error, "func": func_name}
-
-    with open(file_name, 'w') as f:
-        json.dump(errors, f, indent=4)
-
-    print(f"updated {file_name}")
-
-
 def get_type():
     now = datetime.now().time().replace(second=0, microsecond=0)
     currH, currM = now.hour, now.minute
@@ -161,8 +137,7 @@ def send_tweet(order, a,b,c,d,e):
         print(f"new tweet is {result}")
     except openai.error.OpenAIError as e:
         print(f"[send_tweet] openAI Error: {e}\n")
-        update_json("openai", order, str(e), "send_tweet")
-        #git_push("updated openai_errors")
+
 
     # tweet the result
     if production:
