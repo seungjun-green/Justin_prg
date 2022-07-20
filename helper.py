@@ -3,7 +3,7 @@ import tweepy as twitter
 import re
 import keys
 
-production = True
+production = False
 engine = "text-davinci-002"
 
 record = {
