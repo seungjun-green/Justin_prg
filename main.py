@@ -5,8 +5,8 @@ import time
 import multiprocessing
 import keys
 
-auth = twitter.OAuthHandler("CbiBlIQwIeDKdYmcwxfYNErYh", "s0dR9Mw8JVwQVz5CxYM2GkMoEUnfQR0evwGBU9nfIm0VEdHc9Q")
-auth.set_access_token("1499630375756509184-hxzaVnIh0kgfukgTZQSsQeYwzS4loT", "yubSOxS0VCSguzG96PhiqaR0l1jL937kcJJejoJn6qqkx")
+auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
+auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 openai.api_key = keys.ai_key
 
@@ -50,7 +50,7 @@ if __name__ == "__main__":
     processes = []
     # p1 = multiprocessing.Process(target=tweet)
     # p1.start()
-    # processes.append(p1)
+    # processes.append(p1)t
 
     p2=multiprocessing.Process(target=reply)
     p2.start()

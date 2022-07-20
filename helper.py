@@ -11,13 +11,6 @@ import keys
 production = False
 engine = "text-davinci-002"
 
-celbs = ["elonmusk","engineers_feed", "lexfridman"]
-
-celbs_name = {
-    "elonmusk":["elonmusk:", "Elon Musk:", "Elon:", "elon:"],
-    "lexfridman": ["lexfridman","Lex"],
-}
-
 record = {
     "reply": {"firstTime": True, "lastReplied_id": 0},
     "elonmusk": {"firstTime": True, "lastReplied_id": 0},
@@ -157,21 +150,12 @@ def send_tweet(order, a,b,c,d,e):
             print('tweet-tweeted!')
         except twitter.errors.TweepyException as e:
             print(f"[send_tweet] Twitter Error: {e} \n")
-            #update_json("tweet",result, str(e), "send_tweet")
-            #git_push("updated tweet_errors")
     else:
         print("Content tweeted - Development mode\n")
 
 
-
 def create_stop_seq(user):
-    if user in celbs_name:
-        return celbs_name[user]
-    else:
-        # replying feature
-        return [f"{user}:", "You:"]
-
-
+    return [f"{user}:", "You:"]
 
 def send_reply(order,particpants,curr_id, user):
     result = ""
@@ -276,13 +260,9 @@ def construct_conv_order(tw_id):
     print("-------end of the order-------\n")
     return order, particpants
 
-
-
-
 def get_replies():
     replies = []
     if record["reply"]["firstTime"]:
-
         # len(rd) should be 1 all the time,no matter wgat, but due to some error of Twitter API which say there was any no recent tweet, added While True block
         # from the second time it is OK for such error happening. Because at first time it have to update recent id. Which will be used in second time
         try:
@@ -293,7 +273,6 @@ def get_replies():
             record["reply"]["firstTime"] = False
         except twitter.errors.TweepyException as e:
             print(f"[get_replies] (First time) Twitter Error: {e}\n")
-            #update_json("tweet","first time - get replies", str(e), "get_replies")
     else:
         try:
             rd = api.mentions_timeline(since_id=record["reply"]["lastReplied_id"])
@@ -303,40 +282,9 @@ def get_replies():
                 replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
         except twitter.errors.TweepyException as e:
             print(f"[get_replies] (Second time) Twitter Error: {e}\n")
-            #update_json("tweet","second time - get replies", str(e), "get_replies")
 
 
     return replies
-
-def get_celb_tweets(celb):
-    elons=[]
-    if record[celb]["firstTime"]:
-        # len(rd) should be 1 all the time,no matter wgat, but due to some error of Twitter API which say there was any no recent tweet, added While True block
-        # from the second time it is for such error happening. Because at first time it have to update recent id. Which will be used in secind time
-        try:
-            rd = api.user_timeline(screen_name=celb, count=1)
-            print(f"{celb} - first Time: {len(rd)}")
-            for dot in rd:
-                elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
-            record[celb]["firstTime"] = False
-        except twitter.errors.TweepyException as e:
-            print(f"[get_elons_tweets] (First time) Twitter Error: {e}\n")
-            #update_json("tweet", "first time - get elons tweet", str(e), "get_elos_tweets")
-    else:
-        try:
-            rd = api.user_timeline(screen_name=celb, since_id=record[celb]["lastReplied_id"])
-            if (len(rd) > 0):
-                print(f"{celb} - second Time: {len(rd)}")
-
-
-            for dot in rd:
-                elons.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
-
-        except twitter.errors.TweepyException as e:
-            print(f"[get_elons_tweets] (Second time) Twitter Error: {e}\n")
-            #update_json("tweet", "second time - get elons tweet", str(e), "get_elos_tweets")
-
-    return elons
 
 def process_str(str):
     last = str.find('Friend:')
