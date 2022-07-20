@@ -1,27 +1,19 @@
-import openai
-import tweepy as twitter
 import helper
 import time
-from Resources import keys
 from Creater import Creater
-
-auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
-auth.set_access_token(keys.oa_key, keys.oa_secret)
-api = twitter.API(auth)
-openai.api_key = keys.ai_key
-
 
 def tweet():
     # create a content and tweet it
+    creater = Creater()
     while True:
-        tweet_type = Creater.get_type()
+        tweet_type = creater.get_type()
         if tweet_type == None:
             pass
         else:
-            orders, settings = Creater.create_order(tweet_type)
+            orders, settings = creater.create_order(tweet_type)
             a, b, c, d, e = settings
             for order in orders:
-                Creater.send_tweet(order, a, b, c, d, e)
+                creater.send_tweet(order, a, b, c, d, e)
 
         time.sleep(60)
 

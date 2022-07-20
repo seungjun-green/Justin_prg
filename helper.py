@@ -51,6 +51,8 @@ def send_reply(order,particpants,curr_id, user):
         for particpant in particpants:
             taggins+=f'{particpant} '
 
+
+
         result = taggins + result
         result = re.sub('\n', '', result)
         result=process_str(result)

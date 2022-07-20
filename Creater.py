@@ -1,6 +1,6 @@
 import random
 import openai
-from venv.resources import data
+from Resources import data
 from Resources import keys
 from newsapi import NewsApiClient
 from datetime import date,timedelta, datetime
@@ -8,7 +8,6 @@ from datetime import date,timedelta, datetime
 engine = "text-davinci-002"
 
 class Creater:
-
     def send_tweet(self, order, a, b, c, d, e):
         # only used for creating contents - news!
         result = ""
@@ -38,7 +37,6 @@ class Creater:
             print(f"new tweet is {result}")
         except openai.error.OpenAIError as e:
             print(f"[send_tweet] openAI Error: {e}\n")
-
 
     def get_type(self):
         now = datetime.now().time().replace(second=0, microsecond=0)
@@ -82,7 +80,7 @@ class Creater:
 
         return random.choice(choices)
 
-    def create_order(self, typr):
+    def create_order(self, type):
         if type == 'dev':
             root = random.choice(list(data.tags.items()))
             selected_tag = random.choice(list(root[1]))
@@ -111,11 +109,3 @@ class Creater:
                 str = str[:-7]
 
             return [f"Friend:Feel free to express your emotion on: {str}\nYou:"], (0.5, 60, 1, 0.5, 0)
-
-
-
-
-'''
-
-
-'''
