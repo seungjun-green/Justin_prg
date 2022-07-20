@@ -214,8 +214,6 @@ def send_reply(order,particpants,curr_id, user):
         print(f"My Reply: {result}")
     except openai.OpenAIError as e:
         print(f"[send_reply] openAI Error: {e}")
-        #update_json("openai", order, str(e), "send_reply")
-        #git_push("updated openai_errors")
 
     # tweet the reply
     if production:
@@ -240,8 +238,7 @@ def send_reply(order,particpants,curr_id, user):
                 print("reply-tweeted! \n")
         except twitter.errors.TweepyException as e:
             print(f"[send_reply] Twitter Error: {e}\n")
-            #update_json("tweet", result, str(e), "send_reply")
-            #git_push("updated tweet_errors")
+
     else:
         print("reply tweeted - Development mode\n")
 
