@@ -3,6 +3,7 @@ import tweepy as twitter
 import re
 from Resources import keys
 import Twitter
+import Brain
 
 production = False
 engine = "text-davinci-002"
@@ -11,45 +12,14 @@ auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 
-
-def create_stop_seq(user):
-    return [f"{user}:", "You:"]
-
 def send_reply(order,particpants,curr_id, user):
     result = ""
-    count = 0
-    stop = create_stop_seq(user)
-    # get the response
+    # create a reply
     try:
-        while True:
-            response = openai.Completion.create(
-                engine=engine,
-                prompt=order,
-                temperature=0.5,
-                max_tokens=60,
-                top_p=1,
-                frequency_penalty=0.5,
-                presence_penalty=0,
-                stop=stop
-            )
-
-            count += 1
-            result += response['choices'][0]['text']
-            order += response['choices'][0]['text']
-            if count == 3 or response['choices'][0]['text'] == '':
-                break
-
-        # tweet the result
-        result = re.sub('@[a-zA-Z_0-9]*', '', result)
-        taggins = ""
-        for particpant in particpants:
-            taggins+=f'{particpant} '
-
-
-
-        result = taggins + result
-        result = re.sub('\n', '', result)
-        result=process_str(result)
+        # create a response
+        result = Brain.Brain().create_response(order, [f"{user}:", "You:"])
+        # process the response
+        result=process_str(result, particpants)
         print(f"My Reply: {result}")
     except openai.OpenAIError as e:
         print(f"[send_reply] openAI Error: {e}")
@@ -62,7 +32,6 @@ def send_reply(order,particpants,curr_id, user):
             print(f"[send_reply] Twitter Error: {e}\n")
     else:
         print("reply tweeted - Development mode\n")
-
 
 def construct_conv_order(tw_id):
     chats = []
@@ -102,9 +71,16 @@ def construct_conv_order(tw_id):
     print("-------end of the order-------\n")
     return order, particpants
 
-def process_str(str):
-    last = str.find('Friend:')
+def process_str(result, particpants):
+    result = re.sub('@[a-zA-Z_0-9]*', '', result)
+    taggins = ""
+    for particpant in particpants:
+        taggins += f'{particpant} '
+    result = taggins + result
+    result = re.sub('\n', '', result)
+
+    last = result.find('Friend:')
     if last==-1:
-        return str
+        return result
     else:
-        return str[:last]
+        return result[:last]
