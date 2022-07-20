@@ -20,7 +20,7 @@ def tweet():
             orders, settings = Creater.create_order(tweet_type)
             a, b, c, d, e = settings
             for order in orders:
-                helper.send_tweet(order, a, b, c, d, e)
+                Creater.send_tweet(order, a, b, c, d, e)
         else:
             pass
 
@@ -33,7 +33,7 @@ def reply():
             replies = helper.get_replies()
 
             for i, reply in enumerate(replies):
-                curr_id,text, user = reply
+                curr_id, text, user = reply
                 order, participants = helper.construct_conv_order(curr_id)
                 helper.send_reply(order, participants,curr_id, user)
                 if i==0:
@@ -43,8 +43,6 @@ def reply():
             print("Some error happened - reply")
 
         time.sleep(15)
-
-
 
 if __name__ == "__main__":
     print("Start of the program\n\n")

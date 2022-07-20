@@ -18,64 +18,6 @@ auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 
-def send_tweet(order, a,b,c,d,e):
-    # only used for creating contents - news!
-    result = ""
-    count = 0
-    print(f"the order is:\n {order}")
-
-    # get the response
-    try:
-        while True:
-            response = openai.Completion.create(
-                engine=engine,
-                prompt=order,
-                temperature=a,
-                max_tokens=b,
-                top_p=c,
-                frequency_penalty=d,
-                presence_penalty=e,
-                stop=["Friend:"]
-            )
-
-            count += 1
-            result += response['choices'][0]['text']
-            order += response['choices'][0]['text']
-            if count == 3 or response['choices'][0]['text'] == '':
-                break
-
-        print(f"new tweet is {result}")
-    except openai.error.OpenAIError as e:
-        print(f"[send_tweet] openAI Error: {e}\n")
-
-
-    # tweet the result
-    if production:
-        try:
-            # if result is longer than 280 characters
-            if len(result) > 280:
-                split_strings = []
-                for index in range(0, len(result), 270):
-                    split_strings.append(result[index: index + 270])
-
-                for i, sub_str in enumerate(split_strings):
-                    if i == 0:
-                        api.update_status(sub_str)
-                    else:
-                        result = api.user_timeline(user_id='justin_prg', count=1)
-                        recent_id = result[0]._json['id']
-                        api.update_status(status=sub_str, in_reply_to_status_id=recent_id)
-
-            # if result is shorter than 280 characters
-            else:
-                api.update_status(result)
-            print('tweet-tweeted!')
-        except twitter.errors.TweepyException as e:
-            print(f"[send_tweet] Twitter Error: {e} \n")
-    else:
-        print("Content tweeted - Development mode\n")
-
-
 def create_stop_seq(user):
     return [f"{user}:", "You:"]
 
@@ -204,8 +146,6 @@ def get_replies():
                 replies.append((dot._json['id'], dot._json['text'], dot._json['user']['screen_name']))
         except twitter.errors.TweepyException as e:
             print(f"[get_replies] (Second time) Twitter Error: {e}\n")
-
-
     return replies
 
 def process_str(str):

@@ -8,6 +8,38 @@ from datetime import date,timedelta, datetime
 engine = "text-davinci-002"
 
 class Creater:
+
+    def send_tweet(self, order, a, b, c, d, e):
+        # only used for creating contents - news!
+        result = ""
+        count = 0
+        print(f"the order is:\n {order}")
+
+        # get the response
+        try:
+            while True:
+                response = openai.Completion.create(
+                    engine=engine,
+                    prompt=order,
+                    temperature=a,
+                    max_tokens=b,
+                    top_p=c,
+                    frequency_penalty=d,
+                    presence_penalty=e,
+                    stop=["Friend:"]
+                )
+
+                count += 1
+                result += response['choices'][0]['text']
+                order += response['choices'][0]['text']
+                if count == 3 or response['choices'][0]['text'] == '':
+                    break
+
+            print(f"new tweet is {result}")
+        except openai.error.OpenAIError as e:
+            print(f"[send_tweet] openAI Error: {e}\n")
+
+
     def get_type(self):
         now = datetime.now().time().replace(second=0, microsecond=0)
         currH, currM = now.hour, now.minute
@@ -79,3 +111,11 @@ class Creater:
                 str = str[:-7]
 
             return [f"Friend:Feel free to express your emotion on: {str}\nYou:"], (0.5, 60, 1, 0.5, 0)
+
+
+
+
+'''
+
+
+'''
