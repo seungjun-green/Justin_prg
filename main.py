@@ -4,18 +4,20 @@ import helper
 import time
 import multiprocessing
 import keys
+from Creater import Creater
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 openai.api_key = keys.ai_key
 
+
 def tweet():
     # create a content and tweet it
     while True:
         tweet_type = helper.get_type()
         if tweet_type != None:
-            orders, settings = helper.create_order(tweet_type)
+            orders, settings = Creater.create_order(tweet_type)
             a, b, c, d, e = settings
 
             for order in orders:
