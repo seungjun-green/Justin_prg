@@ -1,7 +1,7 @@
 import openai
 import tweepy as twitter
 import re
-import keys
+from Resources import keys
 
 production = False
 engine = "text-davinci-002"

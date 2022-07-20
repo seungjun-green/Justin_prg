@@ -2,8 +2,7 @@ import openai
 import tweepy as twitter
 import helper
 import time
-import multiprocessing
-import keys
+from Resources import keys
 from Creater import Creater
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
@@ -16,13 +15,13 @@ def tweet():
     # create a content and tweet it
     while True:
         tweet_type = Creater.get_type()
-        if tweet_type != None:
+        if tweet_type == None:
+            pass
+        else:
             orders, settings = Creater.create_order(tweet_type)
             a, b, c, d, e = settings
             for order in orders:
                 Creater.send_tweet(order, a, b, c, d, e)
-        else:
-            pass
 
         time.sleep(60)
 
@@ -44,17 +43,18 @@ def reply():
 
         time.sleep(15)
 
-if __name__ == "__main__":
-    print("Start of the program\n\n")
-    processes = []
-    # p1 = multiprocessing.Process(target=tweet)
-    # p1.start()
-    # processes.append(p1)t
+# if __name__ == "__main__":
+#     print("Start of the program\n\n")
+#     processes = []
+#     # p1 = multiprocessing.Process(target=tweet)
+#     # p1.start()
+#     # processes.append(p1)t
+#
+#     p2=multiprocessing.Process(target=reply)
+#     p2.start()
+#     processes.append(p2)
+#
+#     for process in processes:
+#         process.join()
 
-    p2=multiprocessing.Process(target=reply)
-    p2.start()
-    processes.append(p2)
-
-    for process in processes:
-        process.join()
 

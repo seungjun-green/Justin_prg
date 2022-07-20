@@ -1,7 +1,7 @@
 import random
 import openai
-import data
-import keys
+from venv.resources import data
+from Resources import keys
 from newsapi import NewsApiClient
 from datetime import date,timedelta, datetime
 
