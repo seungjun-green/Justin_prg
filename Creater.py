@@ -3,10 +3,24 @@ import openai
 import data
 import keys
 from newsapi import NewsApiClient
-from datetime import date,timedelta
+from datetime import date,timedelta, datetime
+
 engine = "text-davinci-002"
 
 class Creater:
+    def get_type(self):
+        now = datetime.now().time().replace(second=0, microsecond=0)
+        currH, currM = now.hour, now.minute
+        curr = (currH, currM)
+        if curr in data.dev_times:
+            return 'dev'
+        elif curr in data.joke_times:
+            return 'joke'
+        elif curr in data.news_times:
+            return 'news'
+        else:
+            return None
+
     def get_random_word(self):
 
         response = openai.Completion.create(
@@ -36,7 +50,7 @@ class Creater:
 
         return random.choice(choices)
 
-    def create_order(self, type):
+    def create_order(self, typr):
         if type == 'dev':
             root = random.choice(list(data.tags.items()))
             selected_tag = random.choice(list(root[1]))

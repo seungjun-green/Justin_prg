@@ -1,8 +1,6 @@
 import openai
-import data
 import tweepy as twitter
 import re
-from datetime import datetime
 import keys
 
 production = True
@@ -15,19 +13,6 @@ record = {
     "tim_cook": {"firstTime": True, "lastReplied_id": 0},
     "lexfridman": {"firstTime": True, "lastReplied_id": 0}
 }
-
-def get_type():
-    now = datetime.now().time().replace(second=0, microsecond=0)
-    currH, currM = now.hour, now.minute
-    curr = (currH, currM)
-    if curr in data.dev_times:
-        return 'dev'
-    elif curr in data.joke_times:
-        return 'joke'
-    elif curr in data.news_times:
-        return 'news'
-    else:
-        return None
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)

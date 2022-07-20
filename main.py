@@ -15,11 +15,10 @@ openai.api_key = keys.ai_key
 def tweet():
     # create a content and tweet it
     while True:
-        tweet_type = helper.get_type()
+        tweet_type = Creater.get_type()
         if tweet_type != None:
             orders, settings = Creater.create_order(tweet_type)
             a, b, c, d, e = settings
-
             for order in orders:
                 helper.send_tweet(order, a, b, c, d, e)
         else:
