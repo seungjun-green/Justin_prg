@@ -2,16 +2,11 @@ import random
 import openai
 import data
 from newsapi import NewsApiClient
-from testing import newss as keys
 from datetime import date,timedelta
 import tweepy as twitter
 import re
 from datetime import datetime
-import json
-import time
-from git import Repo
-import git
-
+import keys
 
 production = False
 engine = "text-davinci-002"
