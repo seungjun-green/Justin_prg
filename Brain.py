@@ -1,14 +1,16 @@
 import openai
-engine = "text-davinci-002"
+import Settings
 from Resources import keys
+
 openai.api_key = keys.ai_key
+
 class Brain:
     def create_response(self, order, stop):
         result = ""
         count = 0
         while True:
             response = openai.Completion.create(
-                engine=engine,
+                engine=Settings.engine,
                 prompt=order,
                 temperature=0.5,
                 max_tokens=60,
@@ -31,7 +33,7 @@ class Brain:
         count = 0
         while True:
             response = openai.Completion.create(
-                engine=engine,
+                engine=Settings.engine,
                 prompt=order,
                 temperature=0.5,
                 max_tokens=60,

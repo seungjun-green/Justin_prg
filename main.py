@@ -42,7 +42,7 @@ if __name__ == "__main__":
     processes = []
     # p1 = multiprocessing.Process(target=tweet)
     # p1.start()
-    # processes.append(p1)t
+    # processes.append(p1)
 
     p2=multiprocessing.Process(target=reply)
     p2.start()

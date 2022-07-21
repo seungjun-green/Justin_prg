@@ -2,12 +2,9 @@ import openai
 import tweepy as twitter
 import re
 from Resources import keys
-import Twitter
+from Twitter import Twitter
 import Brain
 import Settings
-
-
-
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
@@ -28,7 +25,7 @@ def send_reply(order,particpants,curr_id, user):
     # tweet the reply
     if Settings.production:
         try:
-            Twitter.Twitter().tweet_reply(result, curr_id)
+            Twitter().tweet_reply(result, curr_id)
         except twitter.errors.TweepyException as e:
             print(f"[send_reply] Twitter Error: {e}\n")
     else:
