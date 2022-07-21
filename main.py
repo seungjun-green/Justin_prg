@@ -9,11 +9,14 @@ def tweet():
     # create a content and tweet it
     creater = Creater()
     while True:
-        tweet_type = creater.get_type()
+        #tweet_type = creater.get_type()
+        tweet_type = "news"
         if tweet_type == None:
             pass
         else:
+            print("___-")
             orders = creater.create_order(tweet_type)
+            print(orders)
             for order in orders:
                 creater.send_tweet(order)
 
@@ -40,13 +43,13 @@ def reply():
 if __name__ == "__main__":
     print("Start of the program\n\n")
     processes = []
-    # p1 = multiprocessing.Process(target=tweet)
-    # p1.start()
-    # processes.append(p1)
+    p1 = multiprocessing.Process(target=tweet)
+    p1.start()
+    processes.append(p1)
 
-    p2=multiprocessing.Process(target=reply)
-    p2.start()
-    processes.append(p2)
+    # p2=multiprocessing.Process(target=reply)
+    # p2.start()
+    # processes.append(p2)
 
     for process in processes:
         process.join()

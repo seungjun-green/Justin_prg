@@ -40,15 +40,14 @@ class Creater:
             yesterday = today - timedelta(1)
             end = today.strftime("%Y-%m-%d")
             start = yesterday.strftime("%Y-%m-%d")
-            recent_news = newsapi.get_everything(
-                domains='cnbc.com',
-                from_param=start,
-                to=end,
+            print("^^^^^")
+            recent_news = newsapi.get_top_headlines(
+                category = "science",
                 language='en',
-                sort_by='relevancy',
                 page=1)
 
             str = recent_news['articles'][0]['title']
+            print(str)
             if str.endswith('CNBC'):
                 str = str[:-7]
 
@@ -56,3 +55,6 @@ class Creater:
 
 
 
+'''
+categories = {"business", "entertainment", "general", "health", "science", "sports", "technology"}
+'''
