@@ -4,7 +4,6 @@ from Creater import Creater
 import multiprocessing
 import Twitter
 
-
 def tweet():
     # create a content and tweet it
     creater = Creater()
@@ -42,9 +41,9 @@ def reply():
 if __name__ == "__main__":
     print("Start of the program\n\n")
     processes = []
-    # p1 = multiprocessing.Process(target=tweet)
-    # p1.start()
-    # processes.append(p1)
+    p1 = multiprocessing.Process(target=tweet)
+    p1.start()
+    processes.append(p1)
 
     p2=multiprocessing.Process(target=reply)
     p2.start()
