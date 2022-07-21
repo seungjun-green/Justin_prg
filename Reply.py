@@ -42,7 +42,6 @@ def construct_conv_order(tw_id):
             data = rd._json
 
         text = data['text']
-        #text = re.sub('@[a-zA-Z_0-9]*', '', text)
         user = data['user']['screen_name']
         if user == 'Justin_prg':
             user = 'You'
