@@ -47,16 +47,16 @@ class Twitter:
 
             for i, sub_str in enumerate(split_strings):
                 if i == 0:
-                    api.update_status(status=sub_str, in_reply_to_status_id=curr_id)
+                    api.update_status(status=sub_str, in_reply_to_status_id=curr_id, auto_populate_reply_metadata=True)
 
                 else:
                     result = api.user_timeline(user_id='justin_prg', count=1)
                     recent_id = result[0]._json['id']
-                    api.update_status(status=sub_str, in_reply_to_status_id=recent_id)
+                    api.update_status(status=sub_str, in_reply_to_status_id=recent_id, auto_populate_reply_metadata=True)
 
         # if result is shorter than 280 characters
         else:
-            api.update_status(status=result, in_reply_to_status_id=curr_id)
+            api.update_status(status=result, in_reply_to_status_id=curr_id, auto_populate_reply_metadata=True)
             print("reply-tweeted! \n")
 
     def tweet_content(self, result):

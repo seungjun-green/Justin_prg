@@ -40,7 +40,6 @@ class Creater:
             yesterday = today - timedelta(1)
             end = today.strftime("%Y-%m-%d")
             start = yesterday.strftime("%Y-%m-%d")
-            new_things = []
             recent_news = newsapi.get_everything(
                 domains='cnbc.com',
                 from_param=start,

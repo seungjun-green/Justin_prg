@@ -71,10 +71,6 @@ def construct_conv_order(tw_id):
 
 def process_str(result, particpants):
     result = re.sub('@[a-zA-Z_0-9]*', '', result)
-    taggins = ""
-    for particpant in particpants:
-        taggins += f'{particpant} '
-    result = taggins + result
     result = re.sub('\n', '', result)
 
     last = result.find('Friend:')
