@@ -1,4 +1,3 @@
-import random
 import openai
 from Resources import data
 from Resources import keys
@@ -8,13 +7,11 @@ from Brain import  Brain
 from Twitter import Twitter
 import Settings
 
-
 class Creater:
-    def send_tweet(self, order, a, b, c, d, e):
-        # only used for creating contents - news!
+    def send_tweet(self, order):
+        # creating content
         result = ""
         print(f"the order is:\n {order}")
-        # get the response
         try:
             result = Brain().create_content(order)
             print(f"new tweet is {result}")
@@ -26,8 +23,6 @@ class Creater:
             Twitter().tweet_content(result)
         else:
             print("content tweeted - Development mode\n")
-
-
 
     def get_type(self):
         now = datetime.now().time().replace(second=0, microsecond=0)
@@ -58,9 +53,7 @@ class Creater:
             if str.endswith('CNBC'):
                 str = str[:-7]
 
-            return [f"Friend:Feel free to express your emotion on: {str}\nYou:"], (0.5, 60, 1, 0.5, 0)
-
-
+            return [f"Friend:Feel free to express your emotion on: {str}\nYou:"]
 
 
 

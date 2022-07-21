@@ -13,10 +13,9 @@ def tweet():
         if tweet_type == None:
             pass
         else:
-            orders, settings = creater.create_order(tweet_type)
-            a, b, c, d, e = settings
+            orders = creater.create_order(tweet_type)
             for order in orders:
-                creater.send_tweet(order, a, b, c, d, e)
+                creater.send_tweet(order)
 
         time.sleep(60)
 
