@@ -1,11 +1,13 @@
+import random
 import openai
 from Resources import data
 from Resources import keys
 from newsapi import NewsApiClient
-from datetime import date,timedelta, datetime
-from Brain import  Brain
+from datetime import datetime
+from Brain import Brain
 from Twitter import Twitter
 import Settings
+import re
 
 class Creater:
     def send_tweet(self, order):
@@ -13,47 +15,48 @@ class Creater:
         result = ""
         print(f"the order is:\n {order}")
         try:
+            #create and process the string
             result = Brain().create_content(order)
+            result = self.process_str(result)
             print(f"new tweet is {result}")
         except openai.error.OpenAIError as e:
             print(f"[send_tweet] openAI Error: {e}\n")
 
-        # tweeting
+        # tweeting the content
         if Settings.production:
             Twitter().tweet_content(result)
         else:
             print("content tweeted - Development mode\n")
 
     def get_type(self):
-        now = datetime.now().time().replace(second=0, microsecond=0)
-        currH, currM = now.hour, now.minute
-        curr = (currH, currM)
-        if curr in data.news_times:
-            return 'news'
+        if Settings.production:
+            now = datetime.now().time().replace(second=0, microsecond=0)
+            currH, currM = now.hour, now.minute
+            curr = (currH, currM)
+            if curr in data.news_times:
+                return 'news'
+            else:
+                return None
         else:
-            return None
+            return "news"
 
     def create_order(self, type):
         if type == 'news':
             newsapi = NewsApiClient(api_key=keys.news_key)
-            today = date.today()
-            yesterday = today - timedelta(1)
-            end = today.strftime("%Y-%m-%d")
-            start = yesterday.strftime("%Y-%m-%d")
-            print("^^^^^")
             recent_news = newsapi.get_top_headlines(
-                category = "science",
+                category = random.choice(["science", "technology"]),
                 language='en',
                 page=1)
 
             str = recent_news['articles'][0]['title']
             print(str)
-            if str.endswith('CNBC'):
-                str = str[:-7]
+            return [f"{str}\n{Settings.prompt_create}\n:"]
 
-            return [f"Friend:Feel free to express your emotion on: {str}\nYou:"]
+    def process_str(self, result):
+        result = re.sub('@[a-zA-Z_0-9]*', '', result)
+        result = re.sub('#[a-zA-Z_0-9]*', '', result)
 
-
+        return result
 
 '''
 categories = {"business", "entertainment", "general", "health", "science", "sports", "technology"}
