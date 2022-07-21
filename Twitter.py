@@ -39,7 +39,7 @@ class Twitter:
         return replies
 
 
-    def tweet(self, result, curr_id):
+    def tweet_reply(self, result, curr_id):
         if len(result) > 280:
             split_strings = []
             for index in range(0, len(result), 270):
@@ -58,3 +58,22 @@ class Twitter:
         else:
             api.update_status(status=result, in_reply_to_status_id=curr_id)
             print("reply-tweeted! \n")
+
+    def tweet_content(self, result):
+        if len(result) > 280:
+            split_strings = []
+            for index in range(0, len(result), 270):
+                split_strings.append(result[index: index + 270])
+
+            for i, sub_str in enumerate(split_strings):
+                if i == 0:
+                    api.update_status(sub_str)
+                else:
+                    result = api.user_timeline(user_id='justin_prg', count=1)
+                    recent_id = result[0]._json['id']
+                    api.update_status(status=sub_str, in_reply_to_status_id=recent_id)
+
+        # if result is shorter than 280 characters
+        else:
+            api.update_status(result)
+            print("content-tweeted! \n")

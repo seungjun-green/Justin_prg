@@ -5,8 +5,9 @@ from Resources import keys
 from newsapi import NewsApiClient
 from datetime import date,timedelta, datetime
 from Brain import  Brain
+from Twitter import Twitter
+import Settings
 
-engine = "text-davinci-002"
 
 class Creater:
     def send_tweet(self, order, a, b, c, d, e):
@@ -19,6 +20,13 @@ class Creater:
             print(f"new tweet is {result}")
         except openai.error.OpenAIError as e:
             print(f"[send_tweet] openAI Error: {e}\n")
+
+        # tweeting
+        if Settings.production:
+            Twitter().tweet_content(result)
+        else:
+            print("content tweeted - Development mode\n")
+
 
 
     def get_type(self):

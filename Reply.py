@@ -4,9 +4,10 @@ import re
 from Resources import keys
 import Twitter
 import Brain
+import Settings
 
-production = False
-engine = "text-davinci-002"
+
+
 
 auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
@@ -25,9 +26,9 @@ def send_reply(order,particpants,curr_id, user):
         print(f"[send_reply] openAI Error: {e}")
 
     # tweet the reply
-    if production:
+    if Settings.production:
         try:
-            Twitter.Twitter().tweet(result, curr_id)
+            Twitter.Twitter().tweet_reply(result, curr_id)
         except twitter.errors.TweepyException as e:
             print(f"[send_reply] Twitter Error: {e}\n")
     else:
