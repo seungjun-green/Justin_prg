@@ -49,5 +49,4 @@ class Brain:
             if count == 3 or response['choices'][0]['text'] == '':
                 break
 
-
         return result
