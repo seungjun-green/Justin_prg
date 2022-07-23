@@ -62,6 +62,7 @@ def construct_conv_order(tw_id):
         chat += '\n'
         order += chat
 
+    order = f'{Settings.prompt_reply}' + order
     order+='You:'
     print("\n-------start of the order-------")
     print(order)
