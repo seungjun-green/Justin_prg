@@ -17,7 +17,10 @@ joke_times = {
 
 }
 
+
+# the time zone of GCP is UTC, and UTC is 7 hours faster than San Francisco
+# So Justin will actually tweet at 3PM in PDT
 news_times = {
-    (15, 00)
+    (22, 00)
 }
 
