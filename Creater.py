@@ -44,12 +44,15 @@ class Creater:
         if type == 'news':
             newsapi = NewsApiClient(api_key=keys.news_key)
             recent_news = newsapi.get_top_headlines(
-                category = random.choice(["science", "technology"]),
+                category = "science",
                 language='en',
                 page=1)
 
             str = recent_news['articles'][0]['title']
-            print(str)
+
+            if '-' in str:
+                str = str.split('-')[0]
+                print(str)
             return [f"{str}\n{Settings.prompt_create}\n:"]
 
     def process_str(self, result):

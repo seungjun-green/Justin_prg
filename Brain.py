@@ -35,12 +35,11 @@ class Brain:
             response = openai.Completion.create(
                 engine=Settings.engine,
                 prompt=order,
-                temperature=0.75,
+                temperature=0.7,
                 max_tokens=60,
                 top_p=1,
-                frequency_penalty=0.5,
+                frequency_penalty=0,
                 presence_penalty=0,
-                stop=["Friend:"]
             )
 
             count += 1
