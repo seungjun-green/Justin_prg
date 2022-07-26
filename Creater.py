@@ -56,7 +56,9 @@ class Creater:
             if '-' in str:
                 str = str.split('-')[0]
                 print(str)
-            return [f"{str}\n{Settings.prompt_create}\n:"]
+
+            prompts = [Settings.prompt_create, Settings.prompt_create2]
+            return [f"{str}\n{random.choice(prompts)}\n:"]
 
     def process_str(self, result):
         result = re.sub('@[a-zA-Z_0-9]*', '', result)
