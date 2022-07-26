@@ -9,6 +9,8 @@ from Twitter import Twitter
 import Settings
 import re
 
+categories = ["business", "entertainment", "general", "science", "technology"]
+
 class Creater:
     def send_tweet(self, order):
         # creating content
@@ -41,10 +43,11 @@ class Creater:
             return "news"
 
     def create_order(self, type):
+
         if type == 'news':
             newsapi = NewsApiClient(api_key=keys.news_key)
             recent_news = newsapi.get_top_headlines(
-                category = "science",
+                category = random.choice(categories),
                 language='en',
                 page=1)
 
@@ -62,5 +65,5 @@ class Creater:
         return result
 
 '''
-categories = {"business", "entertainment", "general", "health", "science", "sports", "technology"}
+
 '''
