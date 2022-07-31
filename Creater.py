@@ -81,7 +81,14 @@ class Creater:
 
     def create_order(self):
 
-        word = random.choice(['SwiftUI', 'Swift'])
+
+        import datetime
+        today = datetime.date.today()
+
+        if today.day % 2 == 0:
+            word = random.choice(['SwiftUI', 'Swift'])
+        else:
+            word = random.choice(['Python', 'Machine Learning'])
 
         pormpt = ""
         fetched_tweets = set()
