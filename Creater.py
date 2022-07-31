@@ -42,30 +42,62 @@ class Creater:
         else:
             return "news"
 
-    def create_order(self, type):
-
-        if type == 'news':
-            newsapi = NewsApiClient(api_key=keys.news_key)
-            recent_news = newsapi.get_top_headlines(
-                category = random.choice(categories),
-                language='en',
-                page=1)
-
-            str = recent_news['articles'][0]['title']
-
-            if '-' in str:
-                str = str.split('-')[0]
-                print(str)
-
-            prompts = [Settings.prompt_create, Settings.prompt_create2]
-            return [f"{str}\n{random.choice(prompts)}\n:"]
-
     def process_str(self, result):
         result = re.sub('@[a-zA-Z_0-9]*', '', result)
         result = re.sub('#[a-zA-Z_0-9]*', '', result)
 
         return result
 
-'''
+    def process_data(self, data):
+        scoreboard = []
 
-'''
+        for i in range(0, len(data)):
+            curr_raw = data[i]._json
+            curr = {}
+            curr['tweet_id'] = curr_raw['id']
+            if 'retweeted_status' in curr_raw:
+                raw_text = curr_raw['retweeted_status']['full_text']
+            else:
+                raw_text = curr_raw['full_text']
+
+            processed_text = re.sub(r'RT', "", raw_text)
+            processed_text = re.sub(r'@\w+:', "", processed_text)
+            processed_text = re.sub(r'@\w+', "", processed_text)
+            processed_text = re.sub(r'@:', "", processed_text)
+            processed_text = re.sub(r'@', "", processed_text)
+            processed_text = re.sub(r'https://t.co/\w+', "", processed_text)
+            processed_text = re.sub(r'#\w+', "", processed_text)
+            processed_text = re.sub(r'#', "", processed_text)
+            processed_text = re.sub(r'\n', "", processed_text)
+            processed_text = re.sub(' +', ' ', processed_text)
+            processed_text = re.sub(r'\[Feature]', "", processed_text)
+            curr['text'] = processed_text.strip()
+            curr['score'] = 0
+            print(curr)
+
+            scoreboard.append(curr)
+
+        return scoreboard
+
+    def create_order(self):
+
+        word = random.choice(['SwiftUI', 'Swift'])
+
+        pormpt = ""
+        fetched_tweets = set()
+
+        if Settings.production:
+            raw_data = Twitter().fetch_tweets(word)
+            cleaned_data = self.process_data(raw_data)
+        else:
+            cleaned_data = Settings.example_data
+        for row in cleaned_data:
+            if '100' not in row['text'] and row['text'] not in fetched_tweets:
+                curr = f"tweet: {row['text']}\n"
+                fetched_tweets.add(row['text'])
+                pormpt += curr
+            else:
+                pass
+
+
+        pormpt += '\n  using above content, create your own tweet as if you experienced some of above:'

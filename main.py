@@ -12,11 +12,8 @@ def tweet():
         if tweet_type == None:
             pass
         else:
-            print("___-")
-            orders = creater.create_order(tweet_type)
-            print(orders)
-            for order in orders:
-                creater.send_tweet(order)
+            order = creater.create_order()
+            creater.send_tweet(order)
 
         time.sleep(60)
 
@@ -38,18 +35,31 @@ def reply():
 
         time.sleep(15)
 
-if __name__ == "__main__":
-    print("Start of the program\n\n")
-    processes = []
-    # p1 = multiprocessing.Process(target=tweet)
-    # p1.start()
-    # processes.append(p1)
+# if __name__ == "__main__":
+#     print("Start of the program\n\n")
+#     processes = []
+#     # p1 = multiprocessing.Process(target=tweet)
+#     # p1.start()
+#     # processes.append(p1)
+#
+#     p2=multiprocessing.Process(target=reply)
+#     p2.start()
+#     processes.append(p2)
+#
+#     for process in processes:
+#         process.join()
 
-    p2=multiprocessing.Process(target=reply)
-    p2.start()
-    processes.append(p2)
 
-    for process in processes:
-        process.join()
+'''
+
+
+
+
+
+
+
+'''
+
+
 
 
