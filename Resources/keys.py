@@ -4,5 +4,7 @@ oa_key = "1499630375756509184-hxzaVnIh0kgfukgTZQSsQeYwzS4loT"
 oa_secret = "yubSOxS0VCSguzG96PhiqaR0l1jL937kcJJejoJn6qqkx"
 ai_key = "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"
 news_key='569869d589e24c9484621b4adecc323d'
+bearer_token = "AAAAAAAAAAAAAAAAAAAAAE4HfAEAAAAAbOFr1YCOj%2BiFTcrrtfSosylp1xk%3DwlBZ0wE0Po1uP7aJoGqNvCGmqejXuh3ArqToqjyWheY7UkJH93"
+clinet_secret = "MSxaoH0ZErjTGAqSQR60CmJ3-HIoYGiD8Ivm4lohDKr0h0o6fZ"
 
 
