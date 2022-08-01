@@ -10,14 +10,14 @@ auth = twitter.OAuthHandler(keys.consumer_key, keys.consumer_secret)
 auth.set_access_token(keys.oa_key, keys.oa_secret)
 api = twitter.API(auth)
 
-def send_reply(order,particpants,curr_id, user):
+def send_reply(order,curr_id, user):
     result = ""
     # create a reply
     try:
         # create a response
         result = Brain.Brain().create_response(order, [f"{user}:", "You:"])
         # process the response
-        result=process_str(result, particpants)
+        result=process_str(result)
         print(f"My Reply: {result}")
     except openai.OpenAIError as e:
         print(f"[send_reply] openAI Error: {e}")
@@ -33,7 +33,6 @@ def send_reply(order,particpants,curr_id, user):
 
 def construct_conv_order(tw_id):
     chats = []
-    particpants = set()
     rd = api.get_status(id=tw_id)
     while True:
         try:
@@ -42,11 +41,9 @@ def construct_conv_order(tw_id):
             data = rd._json
 
         text = data['text']
-        user = data['user']['screen_name']
+        user = data['user']['name']
         if user == 'Justin_prg':
             user = 'You'
-        else:
-            particpants.add(f'@{user}')
 
         chats.append(f"{user}:{text}")
         parent_id = data['in_reply_to_status_id']
@@ -67,9 +64,9 @@ def construct_conv_order(tw_id):
     print("\n-------start of the order-------")
     print(order)
     print("-------end of the order-------\n")
-    return order, particpants
+    return order
 
-def process_str(result, particpants):
+def process_str(result):
     result = re.sub('@[a-zA-Z_0-9]*', '', result)
     result = re.sub('\n', '', result)
 

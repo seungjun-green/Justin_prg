@@ -25,8 +25,8 @@ def reply():
 
             for i, reply in enumerate(replies):
                 curr_id, text, user = reply
-                order, participants = Reply.construct_conv_order(curr_id)
-                Reply.send_reply(order, participants,curr_id, user)
+                order = Reply.construct_conv_order(curr_id)
+                Reply.send_reply(order,curr_id, user)
                 if i==0:
                     Twitter.record["reply"]["lastReplied_id"] = curr_id
         except:
