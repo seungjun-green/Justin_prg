@@ -8,6 +8,7 @@ class Brain:
     def create_response(self, order, stop):
         result = ""
         count = 0
+        print(stop)
         while True:
             response = openai.Completion.create(
                 engine=Settings.engine,

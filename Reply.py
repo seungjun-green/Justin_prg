@@ -43,6 +43,9 @@ def construct_conv_order(tw_id):
         text = data['text']
         user = data['user']['screen_name']
 
+        if user == 'Justin_prg':
+            user = 'You'
+
         chats.append(f"{user}:{text}")
         parent_id = data['in_reply_to_status_id']
         if parent_id is None:
@@ -58,7 +61,7 @@ def construct_conv_order(tw_id):
         order += chat
 
     order = f'{Settings.prompt_reply}' + order
-    order+='Justin:'
+    order+='You:'
     print("\n-------start of the order-------")
     print(order)
     print("-------end of the order-------\n")
