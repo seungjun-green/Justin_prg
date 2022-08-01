@@ -41,9 +41,7 @@ def construct_conv_order(tw_id):
             data = rd._json
 
         text = data['text']
-        user = data['user']['name']
-        if user == 'Justin_prg':
-            user = 'You'
+        user = data['user']['screen_name']
 
         chats.append(f"{user}:{text}")
         parent_id = data['in_reply_to_status_id']
@@ -60,7 +58,7 @@ def construct_conv_order(tw_id):
         order += chat
 
     order = f'{Settings.prompt_reply}' + order
-    order+='You:'
+    order+='Justin_prg:'
     print("\n-------start of the order-------")
     print(order)
     print("-------end of the order-------\n")

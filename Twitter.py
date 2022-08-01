@@ -79,7 +79,5 @@ class Twitter:
             print("content-tweeted! \n")
 
 
-
-
     def fetch_tweets(self, word):
         return api.search_tweets(q=word, count=18, tweet_mode='extended', lang='en')
