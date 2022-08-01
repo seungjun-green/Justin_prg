@@ -1,8 +1,6 @@
 import random
 import openai
 from Resources import data
-from Resources import keys
-from newsapi import NewsApiClient
 from datetime import datetime
 from Brain import Brain
 from Twitter import Twitter
@@ -81,7 +79,6 @@ class Creater:
 
     def create_order(self):
 
-
         import datetime
         today = datetime.date.today()
 
@@ -105,6 +102,5 @@ class Creater:
                 pormpt += curr
             else:
                 pass
-
 
         pormpt += '\n  using above content, create your own tweet as if you experienced some of above:'

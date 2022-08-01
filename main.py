@@ -9,7 +9,7 @@ def tweet():
     creater = Creater()
     while True:
         tweet_type = creater.get_type()
-        if tweet_type == None:
+        if tweet_type is None:
             pass
         else:
             order = creater.create_order()
@@ -23,11 +23,11 @@ def reply():
         try:
             replies = Twitter.Twitter().get_replies()
 
-            for i, reply in enumerate(replies):
-                curr_id, text, user = reply
+            for i, curr_reply in enumerate(replies):
+                curr_id, text, user = curr_reply
                 order = Reply.construct_conv_order(curr_id)
-                Reply.send_reply(order,curr_id, user)
-                if i==0:
+                Reply.send_reply(order, curr_id, user)
+                if i == 0:
                     Twitter.record["reply"]["lastReplied_id"] = curr_id
         except:
             Twitter.record["reply"]["firstTime"] = True
@@ -42,10 +42,9 @@ if __name__ == "__main__":
     p1.start()
     processes.append(p1)
 
-    p2=multiprocessing.Process(target=reply)
+    p2 = multiprocessing.Process(target=reply)
     p2.start()
     processes.append(p2)
 
     for process in processes:
         process.join()
-
