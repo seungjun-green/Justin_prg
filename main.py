@@ -17,6 +17,7 @@ def tweet():
 
         time.sleep(60)
 
+
 def reply():
     # get the replies to its tweet, and reply to them
     while True:
@@ -34,6 +35,7 @@ def reply():
             print("Some error happened - reply")
 
         time.sleep(15)
+
 
 if __name__ == "__main__":
     print("Start of the program\n\n")
