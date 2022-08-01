@@ -15,7 +15,7 @@ def send_reply(order,curr_id, user):
     # create a reply
     try:
         # create a response
-        result = Brain.Brain().create_response(order, [f"{user}:", "You:"])
+        result = Brain.Brain().create_response(order, [f"{user}:", "You:", "Human:"])
         # process the response
         result=process_str(result)
         print(f"My Reply: {result}")
@@ -52,13 +52,13 @@ def construct_conv_order(tw_id):
     # reverse chats
     chats.reverse()
     order = ""
-    for chat in chats:
+    for i, chat in enumerate(chats):
         chat = re.sub('\n', '', chat)
         chat += '\n'
         order += chat
 
     order = f'{Settings.prompt_reply}' + order
-    order+='Justin_prg:'
+    order+='Justin:'
     print("\n-------start of the order-------")
     print(order)
     print("-------end of the order-------\n")

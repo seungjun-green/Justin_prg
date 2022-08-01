@@ -7,8 +7,6 @@ from Twitter import Twitter
 import Settings
 import re
 
-categories = ["business", "entertainment", "general", "science", "technology"]
-
 class Creater:
     def send_tweet(self, order):
         # creating content
