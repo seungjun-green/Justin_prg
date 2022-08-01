@@ -86,7 +86,7 @@ class Creater:
         today = datetime.date.today()
 
         if today.day % 2 == 0:
-            word = random.choice(['SwiftUI', 'Swift'])
+            word = random.choice(['SwiftUI', 'UIKit'])
         else:
             word = random.choice(['Python', 'Machine Learning'])
 
