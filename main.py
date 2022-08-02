@@ -16,7 +16,7 @@ def tweet():
     creater = Creater()
     while True:
         tweet_type = creater.get_type()
-        if tweet_type == None:
+        if tweet_type is None:
             pass
         else:
             order = creater.create_order()
@@ -54,9 +54,9 @@ if __name__ == "__main__":
     p1.start()
     processes.append(p1)
 
-    p2=multiprocessing.Process(target=reply)
-    p2.start()
-    processes.append(p2)
+    # p2=multiprocessing.Process(target=reply)
+    # p2.start()
+    # processes.append(p2)
 
     for process in processes:
         process.join()
