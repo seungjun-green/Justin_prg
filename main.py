@@ -54,18 +54,18 @@ if __name__ == "__main__":
     p1.start()
     processes.append(p1)
 
-    # p2=multiprocessing.Process(target=reply)
-    # p2.start()
-    # processes.append(p2)
+    p2=multiprocessing.Process(target=reply)
+    p2.start()
+    processes.append(p2)
 
     for process in processes:
         process.join()
 
 # printer = IDPrinter(keys.bearer_token)
-# printer.delete_rules('1554062634634203137')
-# printer.delete_rules('1554065083797741568')
-# printer.add_rules(twitter.StreamRule('@Justin_prg -from:Justin_prg'))
-
+# # printer.delete_rules('1554062634634203137')
+# # printer.delete_rules('1554065083797741568')
+# # printer.add_rules(twitter.StreamRule('@Justin_prg -from:Justin_prg'))
+# print(printer.get_rules())
 
 
 
