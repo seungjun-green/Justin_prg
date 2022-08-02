@@ -97,7 +97,7 @@ class Creater:
         print("Did we came here?")
         print(len(cleaned_data))
         for row in cleaned_data:
-            if '100' not in row['text'] and 'learn' not in row['text'] and row['text'] not in fetched_tweets:
+            if '100' not in row['text'] and row['text'] not in fetched_tweets:
                 curr = f"tweet: {row['text']}\n"
                 fetched_tweets.add(row['text'])
                 pormpt += curr
