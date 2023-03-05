@@ -2,4 +2,4 @@
 Twitter Bot Powered By GPT-3
 
 
-This is a rep for my twitter bot @justin_prg
+This is a rep for my twitter bot [@justin_prg](https://twitter.com/Justin_prg)
